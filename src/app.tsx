@@ -1,7 +1,7 @@
 import React from "react"
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom"
 import CreatePage from "./pages/CreatePage"
-
+import "./app.css"
 
 const App = () => (
 	<div>

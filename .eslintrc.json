@@ -1,13 +1,16 @@
 {
     "env": {
-    "browser": true,
+        "browser": true,
+        "amd": true,
+        "node": true,
+        "jest": true,
         "es2021": true
     },
     "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
-],
+    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
     "ecmaFeatures": {
@@ -15,13 +18,13 @@
     },
     "ecmaVersion": 12,
         "sourceType": "module"
-},
+    },
     "plugins": [
     "react",
     "@typescript-eslint"
-],
+    ],
     "rules": {
-    "react/prop-types": "off",
+        "react/prop-types": "off",
         "no-use-before-define": "off",
         "no-mixed-spaces-and-tabs": "off",
         "@typescript-eslint/no-explicit-any": "off",
@@ -30,32 +33,31 @@
         "@typescript-eslint/no-use-before-define": ["error", {"variables": false}],
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "indent": [
-        "error",
-        "tab"
-    ],
+            "error",
+            "tab"
+        ],
         "semi": [
-        "error",
-        "never"
-    ],
+            "error",
+            "never"
+        ],
         "linebreak-style": [
-        "error",
-        "unix"
-    ],
+            "error",
+            "unix"
+        ],
         "quotes": [
-        "error",
-        "double"
-    ],
+            "error",
+            "double"
+        ],
         "max-len": [
-        "error",
-        {
-            "code": 100
-        }
-    ],
+            "error",
+            {
+                "code": 100
+            }
+        ],
         "camelcase": [
-        "error",
-        {
-            "properties": "always"
-        }
-    ]
-}
+            "error",
+            {
+                "properties": "always"
+            }
+        ]}
 }
