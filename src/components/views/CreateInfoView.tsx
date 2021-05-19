@@ -4,12 +4,11 @@ interface CustomProps {
 	setRenderPageState: () => void
 }
 
-export default function CreateMainView({setRenderPageState}:CustomProps) {
-
-	return (
+export default function CreateInfoView({setRenderPageState}:CustomProps) {
+	return(
 		<div>
 			<button onClick={() => setRenderPageState()}>
-				Next
+				Next Page
 			</button>
 		</div>
 	)

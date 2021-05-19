@@ -1,5 +1,5 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const path = require("path")
 
 module.exports = {
 	mode: "development",
@@ -44,7 +44,7 @@ module.exports = {
 			{
 				test: /\.png|svg|jpg|gif$/,
 				use: ["file-loader"],
-			},
+			}
 		],
 	},
-};
+}
