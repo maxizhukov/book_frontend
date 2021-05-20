@@ -2,13 +2,15 @@ import React from "react"
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom"
 import CreatePage from "./pages/CreatePage"
 import "./app.css"
+import HomePage from "./components/views/HomePage"
+
 
 const App = () => (
 	<div>
 		<Router>
 			<Switch>
 				<Route exact path="/">
-					<h1>/</h1>
+					<HomePage />
 				</Route>
 				<Route exact path="/create">
 					<CreatePage />

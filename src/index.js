@@ -1,6 +1,9 @@
-import React from "react"
+import React, {Suspense} from "react"
 import ReactDOM from "react-dom"
 import App from "./app"
-import "./i18next"
+import "./i18n"
 
-ReactDOM.render(<App />, document.querySelector("#root"))
+ReactDOM.render(
+	<Suspense fallback={<h1>Loading</h1>}>
+		<App />
+	</Suspense>, document.querySelector("#root"))

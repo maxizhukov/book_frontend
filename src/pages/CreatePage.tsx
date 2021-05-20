@@ -7,8 +7,6 @@ export default function CreatePage() {
 	
 	const [renderPageState, setRenderPageState] = useState("editor")
 
-	console.log(renderPageState)
-
 	const renderPage = () => {
 		switch (renderPageState) {
 		case "main":

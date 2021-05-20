@@ -14,8 +14,8 @@ module.exports = {
 		}),
 	],
 	resolve: {
-		modules: [__dirname, "src", "node_modules"],
-		extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
+		modules: ["node_modules"],
+		extensions: [".js", ".jsx", ".tsx", ".ts"],
 	},
 	performance: {
 		hints: false,
