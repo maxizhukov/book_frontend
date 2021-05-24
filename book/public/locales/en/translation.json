@@ -7,6 +7,19 @@
     "menu": {
       "freckles": "freckles",
       "wrinkles": "wrinkles"
+    },
+    "pages": {
+      "back_btn": "Back",
+      "next_btn": "Next",
+      "page": "Page",
+      "menu": {
+        "background": "Background",
+        "actions": "Actions",
+        "text": "Text",
+        "elements": "Elements",
+        "indoor": "Indoor",
+        "outdoor": "Outdoor"
+      }
     }
   }
 }

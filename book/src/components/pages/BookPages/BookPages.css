@@ -1,0 +1,21 @@
+.page {
+    background-color: #5151b3;
+    width: 100%;
+    -webkit-box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.2);
+}
+
+.page:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.page_window_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+}

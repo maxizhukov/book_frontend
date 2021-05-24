@@ -1,9 +1,18 @@
-import {avatarMenuTypes, HANDLE_AVATAR_MENU} from "../types/editorMenuTypes"
+import {
+	avatarMenuTypes,
+	HANDLE_AVATAR_MENU,
+	HANDLE_PAGES_MENU
+} from "../types/editorMenuTypes"
 
 const initialState = {
 	avatarMenu: {
 		category: "",
 		subCategories: [],
+		chosenSubCategory: ""
+	},
+	pagesMenu: {
+		subCategories: [],
+		chosenCategory: "",
 		chosenSubCategory: ""
 	}
 }
@@ -16,6 +25,11 @@ export const editorMenuReducer = (
 		return{
 			...state,
 			avatarMenu: action.payload
+		}
+	case HANDLE_PAGES_MENU:
+		return{
+			...state,
+			pagesMenu: action.payload
 		}
 	default: return state
 	}

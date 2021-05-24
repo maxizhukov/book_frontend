@@ -17,3 +17,12 @@ button {
     font-size: 14px;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+}
