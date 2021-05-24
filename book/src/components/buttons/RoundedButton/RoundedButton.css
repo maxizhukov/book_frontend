@@ -1,0 +1,33 @@
+.rounded_btn {
+    width: inherit;
+    padding: 10px 15px;
+    background-color: #37B9F1;
+    color: white;
+    border-radius: 20px;
+}
+
+.rounded_btn.primary{
+    width: inherit;
+    padding: 10px 15px;
+    background-color: #37B9F1;
+    color: white;
+    border-radius: 20px;
+}
+
+.rounded_btn.primary:hover{
+    background-color: #30a6d9;
+}
+
+.rounded_btn.outlined{
+    width: inherit;
+    padding: 10px 15px;
+    background-color: transparent;
+    color: #37B9F1;
+    border: 2px solid #37B9F1;
+    border-radius: 20px;
+}
+
+.rounded_btn.outlined:hover{
+    border: 2px solid #30a6d9;
+    color: #30a6d9;
+}

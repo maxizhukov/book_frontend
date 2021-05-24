@@ -1,0 +1,12 @@
+{
+  "editor": {
+    "avatar": {
+      "window_back_btn": "Back",
+      "window_save_btn": "Save"
+    },
+    "menu": {
+      "freckles": "freckles",
+      "wrinkles": "wrinkles"
+    }
+  }
+}

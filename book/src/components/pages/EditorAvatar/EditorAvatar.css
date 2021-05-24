@@ -1,0 +1,70 @@
+.avatar_page {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    width: 100vw;
+    min-height: 100vh;
+    height: 100%;
+    background-color: #FFF3F3;
+}
+
+.avatar_page_menu {
+    background-color: white;
+    max-width: 100vw;
+    border-radius: 20px 0 0 20px;
+    -webkit-box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.2);
+}
+
+.editor_window_btn_box {
+    padding-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editor_items_list {
+    max-width: 60vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    padding-left: 15px;
+    padding-right: 15px;
+    grid-gap: 15px;
+    overflow-y: auto;
+}
+
+.editor_items_list_container {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 1200px) {
+    .editor_items_list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 1000px) {
+    .avatar_page {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: 100%;
+    }
+    .avatar_page_menu {
+        border-radius: 20px 20px 0 0;
+        height: 50vh;
+        overflow: hidden;
+    }
+    .editor_items_list_container {
+        max-height: 45vh;
+    }
+    .editor_items_list {
+        width: 100vw;
+        max-width: 100vw;
+        padding: 0;
+        margin: 0;
+        overflow-y: hidden!important;
+        overflow-x: scroll;
+    }
+}

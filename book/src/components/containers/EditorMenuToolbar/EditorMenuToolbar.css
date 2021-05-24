@@ -1,0 +1,38 @@
+.toolbar_container {
+    padding-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow-x: auto;
+    min-width: 600px;
+}
+
+.toolbar_scroll {
+    overflow-x: auto;
+}
+
+.toolbar_scroll_mobile {
+    overflow-x: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.toolbar_scroll_mobile::-webkit-scrollbar {
+    display: none;
+}
+
+
+.toolbar_icon {
+    color: #abaaaa;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.toolbar_icon.selected {
+    color: #5151b3;
+    font-size: 28px;
+    cursor: pointer;
+}
+

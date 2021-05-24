@@ -1,0 +1,19 @@
+.editor_sub_menu_container {
+    display: flex;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.sub_menu_item {
+    padding-right: 10px;
+    color: #abaaaa;
+    cursor: pointer;
+}
+
+.sub_menu_item.selected {
+    color: #30a6d9;
+}
+
+.sub_menu_item:hover {
+    color: #30a6d9;
+}
