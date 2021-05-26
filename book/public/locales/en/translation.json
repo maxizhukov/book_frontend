@@ -5,8 +5,10 @@
       "window_save_btn": "Save"
     },
     "menu": {
-      "freckles": "freckles",
-      "wrinkles": "wrinkles"
+      "skins": "skins",
+      "hair_short": "Short",
+      "hair_middle": "Middle",
+      "hair_long": "Long"
     },
     "pages": {
       "back_btn": "Back",

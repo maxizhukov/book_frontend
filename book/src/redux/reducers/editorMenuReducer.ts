@@ -6,9 +6,9 @@ import {
 
 const initialState = {
 	avatarMenu: {
-		category: "",
-		subCategories: [],
-		chosenSubCategory: ""
+		category: "face_oval",
+		subCategories: ["editor.menu.skins"],
+		chosenSubCategory: "editor.menu.skins"
 	},
 	pagesMenu: {
 		subCategories: [],

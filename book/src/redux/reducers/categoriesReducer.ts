@@ -1,13 +1,15 @@
 import {
 	CATEGORIES_ERROR,
 	categoriesTypes,
-	GET_FACES_OVAL
+	GET_FACES_OVAL,
+	GET_HAIR
 } from "../types/categoriesTypes"
 
 const initialState = {
 	loading: true,
 	error: "",
-	facesOval: []
+	facesOval: [],
+	hair: []
 }
 
 export const categoriesReducer = (
@@ -18,6 +20,12 @@ export const categoriesReducer = (
 		return{
 			...state,
 			facesOval: action.payload,
+			loading: false
+		}
+	case GET_HAIR:
+		return{
+			...state,
+			hair: action.payload,
 			loading: false
 		}
 	case CATEGORIES_ERROR:

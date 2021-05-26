@@ -1,8 +1,6 @@
 .page {
-    background-color: #5151b3;
     width: 100%;
-    -webkit-box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.2);
-    box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.2);
+    position: relative;
 }
 
 .page:after {

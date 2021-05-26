@@ -20,7 +20,6 @@ export default function BookPages() {
 				<div className="center" style={{width: "100%", height: "calc(100% - 50px)"}}>
 					<div className="page" />
 				</div>
-
 			</div>
 			<div className="avatar_page_menu">
 				<PagesEditorToolbar />

@@ -1,4 +1,58 @@
 .editor_list_item {
     width: 100%;
     cursor: pointer;
+    height: 170px;
+    background: url("http://localhost:5000/uploads/myImage-1621894499434.jpeg") center no-repeat;
+    background-size: contain;
+    position: relative;
+}
+
+.editor_list_item.selected {
+    border-radius: 10px;
+   border: 2px solid #0ce90c;
+}
+
+.checked_dot {
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    min-height: 20px;
+    border-radius: 50%;
+    background-color: #0ce90c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+@media (max-width: 500px) {
+    .checked_dot {
+        width: 15px;
+        min-width: 15px;
+        height: 15px;
+        min-height: 15px;
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .editor_list_item {
+        height: 150px;
+    }
+}
+
+@media (max-width: 500px) {
+    .editor_list_item {
+        height: 130px;
+    }
+}
+
+@media (max-width: 400px) {
+    .editor_list_item {
+        height: 110px;
+    }
 }

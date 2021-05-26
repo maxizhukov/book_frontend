@@ -6,29 +6,23 @@ import EditorSubMenuContainer from "../../containers/EditorSubMenuContainer/Edit
 import EditorMenuToolbar from "../../containers/EditorMenuToolbar/EditorMenuToolbar"
 import {connect, useDispatch} from "react-redux"
 import {RootState} from "../../../redux/reducers/rootReducer"
-import EditorListItem from "../../containers/EditorListItem/EditorListItem"
-import {getFacesOval} from "../../../redux/actions/categoriesActions"
+import EditorMenList from "../../containers/EditorMenuList/EditorMenuList"
+import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
 
 
 interface CustomProps {
-	menuState?: any,
-	categories?: any
+	menuState?: any
 }
 
-function EditorAvatar({menuState, categories}:CustomProps) {
+function EditorAvatar({menuState}:CustomProps) {
 	const { t } = useTranslation()
-	const dispatch = useDispatch()
 
-	useEffect(() => {
-		dispatch(getFacesOval())
-	}, [])
-
-	console.log(categories.facesOval)
+	/*editor_window_btn_box*/
 
 	return(
 		<div className="avatar_page">
 			<div className="avatar_page_window">
-				<div className="editor_window_btn_box">
+				<div className="page_window_header">
 					<RoundedButton
 						customStyle="outlined"
 						text={t("editor.avatar.window_back_btn")}
@@ -38,6 +32,9 @@ function EditorAvatar({menuState, categories}:CustomProps) {
 						text={t("editor.avatar.window_save_btn")}
 					/>
 				</div>
+				<div className="center" style={{width: "100%", height: "calc(100% - 50px)"}}>
+					<AvatarContainer />
+				</div>
 			</div>
 			<div className="avatar_page_menu">
 				<EditorMenuToolbar />
@@ -46,14 +43,7 @@ function EditorAvatar({menuState, categories}:CustomProps) {
 					: null
 				}
 				<div className="editor_items_list_container">
-					<div className="editor_items_list">
-						{categories.loading
-							? <p>Loading</p>
-							: categories.facesOval.faces.map((item:any) => (
-								<p>OK</p>
-							))
-						}
-					</div>
+					<EditorMenList />
 				</div>
 			</div>
 		</div>
@@ -62,8 +52,7 @@ function EditorAvatar({menuState, categories}:CustomProps) {
 
 const mapStateToProps = (state:RootState) => {
 	return {
-		menuState: state.editorMenu.avatarMenu,
-		categories: state.categories
+		menuState: state.editorMenu.avatarMenu
 	}
 }
 
