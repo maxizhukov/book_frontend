@@ -8,13 +8,14 @@ interface CustomProps {
 }
 
 function AvatarContainer({avatars}:CustomProps) {
+
 	return(
 		<div className="page">
 			<div className="avatar_box">
 				<div className="avatar_container">
 					<div
 						className="avatar_faceSkin"
-						style={{backgroundImage: `url("${avatars[0].faceSkin}")`}}
+						style={{backgroundImage: `url("${avatars[0].faceOval}")`}}
 					/>
 					<div
 						className="avatar_hair"

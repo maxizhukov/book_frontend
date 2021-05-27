@@ -17,3 +17,34 @@
 .sub_menu_item:hover {
     color: #30a6d9;
 }
+
+.color_dot_container.selected {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #30a6d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color_dot_container {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color_dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}

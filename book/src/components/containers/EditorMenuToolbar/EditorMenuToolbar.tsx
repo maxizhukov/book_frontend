@@ -18,8 +18,8 @@ function EditorMenuToolbar({menuState}:CustomProps) {
 		let defaultChooseSubCategory:string = ""
 		switch (menuItem) {
 		case "face_oval":
-			subCategories = ["editor.menu.skins"]
-			defaultChooseSubCategory = "editor.menu.skins"
+			subCategories = ["editor.menu.faceOval"]
+			defaultChooseSubCategory = "editor.menu.faceOval"
 			break
 		case "hair":
 			subCategories = [

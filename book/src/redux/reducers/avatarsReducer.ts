@@ -3,12 +3,18 @@ import {avatarsTypes, CHANGE_AVATAR} from "../types/avatarsTypes"
 const initialState = {
 	avatars: [
 		{
-			faceSkin: "http://localhost:5000/uploads/myImage-1621894477914.jpeg",
-			hair: ""
+			skinName: "",
+			faceOval: "",
+			faceName: "",
+			hair: "",
+			hairColor: ""
 		},
 		{
-			faceSkin: "http://localhost:5000/uploads/myImage-1621894477914.jpeg",
-			hair: ""
+			skinName: "",
+			faceOval: "",
+			faceName: "",
+			hair: "",
+			hairColor: ""
 		}
 	]
 }

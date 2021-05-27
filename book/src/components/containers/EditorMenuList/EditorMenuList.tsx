@@ -27,7 +27,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 	useEffect(() => {
 		if (menuState) {
 			switch (menuState.chosenSubCategory) {
-			case "editor.menu.skins":
+			case "editor.menu.faceOval":
 				dispatch(getFacesOval())
 				break
 			case "editor.menu.hair_short":
@@ -45,34 +45,61 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 
 	// Set chosen data
 	useEffect(() => {
-		if (menuState.chosenSubCategory === "editor.menu.skins") {
-			setChosenItem(avatars[0].faceSkin)
+		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
+			setChosenItem(avatars[0].faceOval)
 		}
-		if (
-			menuState.chosenSubCategory === "editor.menu.hair_short" ||
-			menuState.chosenSubCategory === "editor.menu.hair_middle" ||
-			menuState.chosenSubCategory === "editor.menu.hair_long"
-		) {
+		if ( menuState.chosenSubCategory === "editor.menu.hair_middle") {
 			setChosenItem(avatars[0].hair)
 		}
 	}, [menuState, avatars])
 
 	// set data to current post
 	useEffect(() => {
-		if (menuState.chosenSubCategory === "editor.menu.skins" && categories.facesOval.items) {
-			setCurrentPosts(categories.facesOval.items[0].types)
+		if (menuState.chosenSubCategory === "editor.menu.faceOval"
+			&& categories.facesOval.items) {
+			const temporaryArray:any = []
+			categories.facesOval.items.forEach((face:any) => {
+				const faceObj:any = {
+					name: "",
+					img: ""
+				}
+				face.types.forEach((item:any) => {
+					if (avatars[0].skinName) {
+						if (avatars[0].skinName === item.name) {
+							faceObj.img = item.img
+						}
+					} else {
+						faceObj.img = item.img
+					}
+				})
+				faceObj.name = face.name
+				temporaryArray.push(faceObj)
+			})
+			setCurrentPosts(temporaryArray)
 		} else if (
-			menuState.chosenSubCategory === "editor.menu.hair_short"
-			|| menuState.chosenSubCategory === "editor.menu.hair_middle"
-			|| menuState.chosenSubCategory === "editor.menu.hair_long"
+			menuState.chosenSubCategory === "editor.menu.hair_middle"
 		) {
 			if (categories.hair.items) {
-				setCurrentPosts(categories.hair.items[0].types)
+				const temporaryArray:any = []
+				categories.hair.items.forEach((face:any) => {
+					const hairObj:any = {
+						name: "",
+						img: ""
+					}
+					face.types.forEach((item:any) => {
+						if (avatars[0].hairColor === item.name) {
+							hairObj.img = item.img
+						}
+					})
+					hairObj.name = face.name
+					temporaryArray.push(hairObj)
+				})
+				setCurrentPosts(temporaryArray)
 			}
 		} else {
 			setCurrentPosts([])
 		}
-	},[categories, menuState])
+	},[categories, menuState, avatars])
 
 	// set name of chosen item
 	const [chosenItem, setChosenItem] = useState("")
@@ -81,15 +108,18 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 	const handleItemClick = (name:string, img:string) => {
 		setChosenItem(name)
 		const avatarsCopy = [...avatars]
-		if (menuState.chosenSubCategory === "editor.menu.skins") {
-			avatarsCopy[0].faceSkin = img
+		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
+			avatarsCopy[0].faceOval = img
+			avatarsCopy[0].faceName = name
 		}
-		if (menuState.chosenSubCategory === "editor.menu.hair_short"
-			|| menuState.chosenSubCategory === "editor.menu.hair_middle"
-			|| menuState.chosenSubCategory === "editor.menu.hair_long") {
+		if ( menuState.chosenSubCategory === "editor.menu.hair_middle") {
 			avatarsCopy[0].hair = img
 		}
 		dispatch(changeAvatar(avatarsCopy))
+	}
+
+	const createUniqueId = (name:any) => {
+		return `${name}${Math.random().toString()}`
 	}
 
 	return(
@@ -97,7 +127,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 			{categories.loading
 				? <p>Loading</p>
 				: currentPosts.map((item:any) => (
-					<React.Fragment key={item.name}>
+					<React.Fragment key={createUniqueId(item.name)}>
 						<EditorListItem
 							item={item}
 							chosenItem={`http://localhost:5000/${item.img}` === chosenItem}
