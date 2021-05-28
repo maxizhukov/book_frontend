@@ -7,14 +7,32 @@ const initialState = {
 			faceOval: "",
 			faceName: "",
 			hair: "",
-			hairColor: ""
+			hairColor: "",
+			eyes: "",
+			eyesName: "",
+			eyesColor: "",
+			eyebrows: "",
+			eyebrowsName: "",
+			eyebrowsColor: "",
+			lips: "",
+			lipsName: "",
+			lipsColor: ""
 		},
 		{
 			skinName: "",
 			faceOval: "",
 			faceName: "",
 			hair: "",
-			hairColor: ""
+			hairColor: "",
+			eyes: "",
+			eyesName: "",
+			eyesColor: "",
+			eyebrows: "",
+			eyebrowsName: "",
+			eyebrowsColor: "",
+			lips: "",
+			lipsName: "",
+			lipsColor: ""
 		}
 	]
 }

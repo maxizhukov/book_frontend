@@ -21,6 +21,18 @@ function AvatarContainer({avatars}:CustomProps) {
 						className="avatar_hair"
 						style={{backgroundImage: `url("${avatars[0].hair}")`}}
 					/>
+					<div
+						className="avatar_eyes"
+						style={{backgroundImage: `url("${avatars[0].eyes}")`}}
+					/>
+					<div
+						className="avatar_eyebrows"
+						style={{backgroundImage: `url("${avatars[0].eyebrows}")`}}
+					/>
+					<div
+						className="avatar_lips"
+						style={{backgroundImage: `url("${avatars[0].lips}")`}}
+					/>
 				</div>
 			</div>
 		</div>

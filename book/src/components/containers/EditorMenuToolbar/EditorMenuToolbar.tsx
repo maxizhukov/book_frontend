@@ -29,7 +29,21 @@ function EditorMenuToolbar({menuState}:CustomProps) {
 			]
 			defaultChooseSubCategory = "editor.menu.hair_short"
 			break
-		default: subCategories = []
+		case "eyes":
+			subCategories = []
+			defaultChooseSubCategory = ""
+			break
+		case "eyebrows":
+			subCategories = []
+			defaultChooseSubCategory = ""
+			break
+		case "lips":
+			subCategories = []
+			defaultChooseSubCategory = ""
+			break
+		default:
+			subCategories = []
+			defaultChooseSubCategory = ""
 		}
 		dispatch(handleAvatarMenu(menuItem, subCategories, defaultChooseSubCategory))
 	}
@@ -75,18 +89,18 @@ function EditorMenuToolbar({menuState}:CustomProps) {
 						1
 					</i>
 					<i
-						onClick={() => handleMenuClick("nose")}
+						onClick={() => handleMenuClick("lips")}
 						className=
-							{menuState.category === "nose"
+							{menuState.category === "lips"
 								? "fas fa-eye toolbar_icon selected"
 								: "fas fa-eye toolbar_icon"
 							}>
 						1
 					</i>
 					<i
-						onClick={() => handleMenuClick("lips")}
+						onClick={() => handleMenuClick("nose")}
 						className=
-							{menuState.category === "lips"
+							{menuState.category === "nose"
 								? "fas fa-eye toolbar_icon selected"
 								: "fas fa-eye toolbar_icon"
 							}>

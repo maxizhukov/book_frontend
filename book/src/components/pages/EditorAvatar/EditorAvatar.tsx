@@ -38,10 +38,7 @@ function EditorAvatar({menuState}:CustomProps) {
 			</div>
 			<div className="avatar_page_menu">
 				<EditorMenuToolbar />
-				{menuState.subCategories.length
-					? <EditorSubMenuContainer />
-					: null
-				}
+				<EditorSubMenuContainer />
 				<div className="editor_items_list_container">
 					<EditorMenList />
 				</div>

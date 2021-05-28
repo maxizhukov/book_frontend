@@ -4,8 +4,11 @@ import EditorListItem from "../EditorListItem/EditorListItem"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {connect, useDispatch} from "react-redux"
 import {
+	getEyebrows,
+	getEyes,
 	getFacesOval,
-	getHair
+	getHair,
+	getLips
 } from "../../../redux/actions/categoriesActions"
 import {changeAvatar} from "../../../redux/actions/avatarsActions"
 
@@ -21,7 +24,20 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 	// define array of posts
 	const [currentPosts, setCurrentPosts] = useState([])
 
-	/*getHair*/
+	// Dispatch if not sub category defined
+	const dispatchByCategory = (state: any) => {
+		switch (menuState.category) {
+		case "eyes":
+			dispatch(getEyes())
+			break
+		case "eyebrows":
+			dispatch(getEyebrows())
+			break
+		case "lips":
+			dispatch(getLips())
+			break
+		}
+	}
 	
 	// dispatch data
 	useEffect(() => {
@@ -39,6 +55,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 			case "editor.menu.hair_long":
 				dispatch(getHair())
 				break
+			default: dispatchByCategory(menuState)
 			}
 		}
 	}, [menuState])
@@ -50,6 +67,15 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		}
 		if ( menuState.chosenSubCategory === "editor.menu.hair_middle") {
 			setChosenItem(avatars[0].hair)
+		}
+		if (menuState.category === "eyes") {
+			setChosenItem(avatars[0].eyes)
+		}
+		if (menuState.category === "eyebrows") {
+			setChosenItem(avatars[0].eyebrows)
+		}
+		if (menuState.category === "lips") {
+			setChosenItem(avatars[0].lips)
 		}
 	}, [menuState, avatars])
 
@@ -96,6 +122,78 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 				})
 				setCurrentPosts(temporaryArray)
 			}
+		} else if (
+			menuState.category === "eyes"
+		) {
+			if (categories.eyes.items) {
+				const temporaryArray:any = []
+				categories.eyes.items.forEach((eyes:any) => {
+					const eyesObj:any = {
+						name: "",
+						img: ""
+					}
+					eyes.types.forEach((item:any) => {
+						if (avatars[0].eyesColor) {
+							if (avatars[0].eyesColor === item.name) {
+								eyesObj.img = item.img
+							}
+						} else {
+							eyesObj.img = item.img
+						}
+					})
+					eyesObj.name = eyes.name
+					temporaryArray.push(eyesObj)
+				})
+				setCurrentPosts(temporaryArray)
+			}
+		} else if (
+			menuState.category === "eyebrows"
+		) {
+			if (categories.eyebrows.items) {
+				const temporaryArray:any = []
+				categories.eyebrows.items.forEach((eyebrows:any) => {
+					const eyebrowsObj:any = {
+						name: "",
+						img: ""
+					}
+					eyebrows.types.forEach((item:any) => {
+						if (avatars[0].eyebrowsColor) {
+							if (avatars[0].eyebrowsColor === item.name) {
+								eyebrowsObj.img = item.img
+							}
+						} else {
+							eyebrowsObj.img = item.img
+						}
+					})
+					eyebrowsObj.name = eyebrows.name
+					temporaryArray.push(eyebrowsObj)
+				})
+				setCurrentPosts(temporaryArray)
+			}
+		} else if (
+			menuState.category === "lips"
+		) {
+			if (categories.lips.items) {
+				const temporaryArray:any = []
+				categories.lips.items.forEach((lips:any) => {
+					const lipsObj:any = {
+						name: "",
+						img: ""
+					}
+					lips.types.forEach((item:any) => {
+						if (avatars[0].lipsColor) {
+							if (avatars[0].lipsColor === item.name) {
+								lipsObj.img = item.img
+							}
+						} else {
+							lipsObj.img = item.img
+						}
+					})
+					lipsObj.name = lips.name
+					temporaryArray.push(lipsObj)
+				})
+				setCurrentPosts(temporaryArray)
+			}
 		} else {
 			setCurrentPosts([])
 		}
@@ -114,6 +212,18 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		}
 		if ( menuState.chosenSubCategory === "editor.menu.hair_middle") {
 			avatarsCopy[0].hair = img
+		}
+		if ( menuState.category === "eyes") {
+			avatarsCopy[0].eyes = img
+			avatarsCopy[0].eyesName = name
+		}
+		if ( menuState.category === "eyebrows") {
+			avatarsCopy[0].eyebrows = img
+			avatarsCopy[0].eyebrowsName = name
+		}
+		if ( menuState.category === "lips") {
+			avatarsCopy[0].lips = img
+			avatarsCopy[0].lipsName = name
 		}
 		dispatch(changeAvatar(avatarsCopy))
 	}
