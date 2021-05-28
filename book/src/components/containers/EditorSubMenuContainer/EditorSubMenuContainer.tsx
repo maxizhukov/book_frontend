@@ -89,6 +89,23 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 		avatarsCopy[0].lips = `http://localhost:5000/${newLipsImage}`
 		dispatch(changeAvatar(avatarsCopy))
 	}
+	// Pick hair color
+	const pickHairColor = (name:string) => {
+		const avatarsCopy = [...avatars]
+		avatarsCopy[0].hairColor = name
+		let newHairImage:string = ""
+		categories.hair.items.forEach((item:any) => {
+			if (item.name === avatars[0].hairName) {
+				item.types.forEach((type:any) => {
+					if (type.name === avatars[0].hairColor) {
+						newHairImage = type.img
+					}
+				})
+			}
+		})
+		avatarsCopy[0].hair = `http://localhost:5000/${newHairImage}`
+		dispatch(changeAvatar(avatarsCopy))
+	}
 
 	// Array of skin colors
 	const skinColors = ["#F5E6CF", "#F7CB93", "#BB9260", "#4D3015"]
@@ -105,6 +122,11 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 	// Array of eyes colors
 	const lipsColors = [
 		"#F198B5", "#D17194", "#EA4E8F", "#E72581"
+	]
+	// Array of eyes colors
+	const hairsColor = [
+		"#B3552D", "#C9CD9F", "#C6B658", "#7B7A6C", "#3E2B16",
+		"#645949", "#252321"
 	]
 
 	return(
@@ -207,6 +229,30 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 								<div
 									className="color_dot"
 									style={{backgroundColor: lipsColors[key]}}
+								/>
+							</div>
+						))}
+					</div>
+				</div>
+				: null
+			}
+			{menuState.category === "hair"
+				?
+				<div className={isMobile ? "toolbar_scroll_mobile" : "toolbar_scroll"}>
+					<div className="editor_sub_menu_container">
+						{Array.from(Array(7).keys()).map((key:number) => (
+							<div
+								style={{marginTop: "20px"}}
+								key={key}
+								className={avatars[0].hairColor === (+key + 1).toString()
+									? "color_dot_container mr-10 selected"
+									: "color_dot_container mr-10"
+								}
+								onClick={() => pickHairColor((+key + 1).toString())}
+							>
+								<div
+									className="color_dot"
+									style={{backgroundColor: hairsColor[key]}}
 								/>
 							</div>
 						))}

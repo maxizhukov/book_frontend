@@ -3,6 +3,7 @@ export const GET_HAIR = "GET_HAIR"
 export const GET_EYES = "GET_EYES"
 export const GET_EYEBROWS = "GET_EYEBROWS"
 export const GET_LIPS = "GET_LIPS"
+export const GET_NOSES = "GET_NOSES"
 export const CATEGORIES_ERROR = "CATEGORIES_ERROR"
 
 interface getFacesOvalType {
@@ -30,6 +31,10 @@ interface getLipsType {
 	payload: any
 }
 
+interface getNosesType {
+	type: typeof GET_NOSES
+	payload: any
+}
 
 interface categoriesErrorType {
 	type: typeof CATEGORIES_ERROR
@@ -42,4 +47,5 @@ export type categoriesTypes =
 	getHairType |
 	getEyesType |
 	getEyebrowsType |
-	getLipsType
+	getLipsType |
+	getNosesType

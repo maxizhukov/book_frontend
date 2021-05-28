@@ -22,12 +22,8 @@ function EditorMenuToolbar({menuState}:CustomProps) {
 			defaultChooseSubCategory = "editor.menu.faceOval"
 			break
 		case "hair":
-			subCategories = [
-				"editor.menu.hair_short",
-				"editor.menu.hair_middle",
-				"editor.menu.hair_long"
-			]
-			defaultChooseSubCategory = "editor.menu.hair_short"
+			subCategories = []
+			defaultChooseSubCategory = ""
 			break
 		case "eyes":
 			subCategories = []
@@ -38,6 +34,10 @@ function EditorMenuToolbar({menuState}:CustomProps) {
 			defaultChooseSubCategory = ""
 			break
 		case "lips":
+			subCategories = []
+			defaultChooseSubCategory = ""
+			break
+		case "nose":
 			subCategories = []
 			defaultChooseSubCategory = ""
 			break

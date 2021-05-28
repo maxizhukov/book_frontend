@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React from "react"
 import "./AvatarContainer.css"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {connect} from "react-redux"
@@ -32,6 +32,10 @@ function AvatarContainer({avatars}:CustomProps) {
 					<div
 						className="avatar_lips"
 						style={{backgroundImage: `url("${avatars[0].lips}")`}}
+					/>
+					<div
+						className="avatar_nose"
+						style={{backgroundImage: `url("${avatars[0].nose}")`}}
 					/>
 				</div>
 			</div>

@@ -7,6 +7,7 @@ const initialState = {
 			faceOval: "",
 			faceName: "",
 			hair: "",
+			hairName: "",
 			hairColor: "",
 			eyes: "",
 			eyesName: "",
@@ -16,7 +17,9 @@ const initialState = {
 			eyebrowsColor: "",
 			lips: "",
 			lipsName: "",
-			lipsColor: ""
+			lipsColor: "",
+			nose: "",
+			noseName: ""
 		},
 		{
 			skinName: "",
@@ -32,7 +35,9 @@ const initialState = {
 			eyebrowsColor: "",
 			lips: "",
 			lipsName: "",
-			lipsColor: ""
+			lipsColor: "",
+			nose: "",
+			noseName: ""
 		}
 	]
 }

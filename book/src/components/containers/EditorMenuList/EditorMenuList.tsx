@@ -8,7 +8,8 @@ import {
 	getEyes,
 	getFacesOval,
 	getHair,
-	getLips
+	getLips,
+	getNoses
 } from "../../../redux/actions/categoriesActions"
 import {changeAvatar} from "../../../redux/actions/avatarsActions"
 
@@ -36,6 +37,12 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		case "lips":
 			dispatch(getLips())
 			break
+		case "nose":
+			dispatch(getNoses())
+			break
+		case "hair":
+			dispatch(getHair())
+			break
 		}
 	}
 	
@@ -45,15 +52,6 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 			switch (menuState.chosenSubCategory) {
 			case "editor.menu.faceOval":
 				dispatch(getFacesOval())
-				break
-			case "editor.menu.hair_short":
-				dispatch(getHair())
-				break
-			case "editor.menu.hair_middle":
-				dispatch(getHair())
-				break
-			case "editor.menu.hair_long":
-				dispatch(getHair())
 				break
 			default: dispatchByCategory(menuState)
 			}
@@ -65,7 +63,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
 			setChosenItem(avatars[0].faceOval)
 		}
-		if ( menuState.chosenSubCategory === "editor.menu.hair_middle") {
+		if ( menuState.category === "hair") {
 			setChosenItem(avatars[0].hair)
 		}
 		if (menuState.category === "eyes") {
@@ -76,6 +74,9 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		}
 		if (menuState.category === "lips") {
 			setChosenItem(avatars[0].lips)
+		}
+		if (menuState.category === "nose") {
+			setChosenItem(avatars[0].nose)
 		}
 	}, [menuState, avatars])
 
@@ -103,21 +104,25 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 			})
 			setCurrentPosts(temporaryArray)
 		} else if (
-			menuState.chosenSubCategory === "editor.menu.hair_middle"
+			menuState.category === "hair"
 		) {
 			if (categories.hair.items) {
 				const temporaryArray:any = []
-				categories.hair.items.forEach((face:any) => {
+				categories.hair.items.forEach((hair:any) => {
 					const hairObj:any = {
 						name: "",
 						img: ""
 					}
-					face.types.forEach((item:any) => {
-						if (avatars[0].hairColor === item.name) {
+					hair.types.forEach((item:any) => {
+						if (avatars[0].hairColor) {
+							if (avatars[0].hairColor === item.name) {
+								hairObj.img = item.img
+							}
+						} else {
 							hairObj.img = item.img
 						}
 					})
-					hairObj.name = face.name
+					hairObj.name = hair.name
 					temporaryArray.push(hairObj)
 				})
 				setCurrentPosts(temporaryArray)
@@ -194,6 +199,25 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 				})
 				setCurrentPosts(temporaryArray)
 			}
+		} else if (
+			menuState.category === "nose"
+		) {
+			if (categories.nose.items) {
+				const temporaryArray:any = []
+				categories.nose.items.forEach((nose:any) => {
+					const noseObj:any = {
+						name: "",
+						img: ""
+					}
+					nose.types.forEach((item:any) => {
+						noseObj.img = item.img
+					})
+					noseObj.name = nose.name
+					temporaryArray.push(noseObj)
+				})
+				console.log(temporaryArray)
+				setCurrentPosts(temporaryArray)
+			}
 		} else {
 			setCurrentPosts([])
 		}
@@ -210,8 +234,9 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 			avatarsCopy[0].faceOval = img
 			avatarsCopy[0].faceName = name
 		}
-		if ( menuState.chosenSubCategory === "editor.menu.hair_middle") {
+		if ( menuState.category === "hair") {
 			avatarsCopy[0].hair = img
+			avatarsCopy[0].hairName = name
 		}
 		if ( menuState.category === "eyes") {
 			avatarsCopy[0].eyes = img
@@ -224,6 +249,10 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		if ( menuState.category === "lips") {
 			avatarsCopy[0].lips = img
 			avatarsCopy[0].lipsName = name
+		}
+		if ( menuState.category === "nose") {
+			avatarsCopy[0].nose = img
+			avatarsCopy[0].noseName = name
 		}
 		dispatch(changeAvatar(avatarsCopy))
 	}
