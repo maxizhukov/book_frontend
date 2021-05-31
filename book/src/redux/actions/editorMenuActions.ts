@@ -1,5 +1,6 @@
 import {
 	HANDLE_AVATAR_MENU,
+	HANDLE_PAGE,
 	HANDLE_PAGES_MENU
 } from "../types/editorMenuTypes"
 
@@ -32,5 +33,13 @@ export function handlePagesMenu(
 			subCategories,
 			chosenSubCategory
 		}
+	}
+}
+
+// Handle page
+export function handlePage(pageNumber:string) {
+	return {
+		type: HANDLE_PAGE,
+		payload: {pageNumber}
 	}
 }

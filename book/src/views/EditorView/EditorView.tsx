@@ -1,5 +1,5 @@
 import React from "react"
-import {Route, Switch} from "react-router-dom"
+import {Redirect, Route, Switch} from "react-router-dom"
 import NotFoundPage from "../NotFoundView/NotFoundView"
 import EditorMainPage from "../../components/pages/EditorMainPage/EditorMainPage"
 import EditorAvatar from "../../components/pages/EditorAvatar/EditorAvatar"
@@ -20,6 +20,9 @@ export default function EditorView() {
 					<EditorAvatar />
 				</Route>
 				<Route exact path="/editor/pages">
+					<Redirect to={"/editor/pages/0"} />
+				</Route>
+				<Route exact path="/editor/pages/:number">
 					<BookPages />
 				</Route>
 				<Route>

@@ -1,6 +1,7 @@
 import {
 	avatarMenuTypes,
 	HANDLE_AVATAR_MENU,
+	HANDLE_PAGE,
 	HANDLE_PAGES_MENU
 } from "../types/editorMenuTypes"
 
@@ -14,7 +15,8 @@ const initialState = {
 		subCategories: [],
 		chosenCategory: "",
 		chosenSubCategory: ""
-	}
+	},
+	page: "0"
 }
 
 export const editorMenuReducer = (
@@ -30,6 +32,11 @@ export const editorMenuReducer = (
 		return{
 			...state,
 			pagesMenu: action.payload
+		}
+	case HANDLE_PAGE:
+		return{
+			...state,
+			page: action.payload
 		}
 	default: return state
 	}
