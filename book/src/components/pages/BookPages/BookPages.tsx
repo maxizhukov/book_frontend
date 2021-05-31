@@ -4,6 +4,7 @@ import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
 import {useTranslation} from "react-i18next"
 import PagesEditorToolbar from "../../containers/PagesEditorToolbar/PagesEditorToolbar"
 import PagesEditorSubToolbar from "../../containers/PagesEditorSubToolbar/PagesEditorSubToolbar"
+import PagesDropdownMenu from "../../dropdown/PagesDropdownMenu/PagesDropdownMenu"
 
 export default function BookPages() {
 	const { t } = useTranslation()
@@ -22,6 +23,7 @@ export default function BookPages() {
 				</div>
 			</div>
 			<div className="avatar_page_menu">
+				<PagesDropdownMenu />
 				<PagesEditorToolbar />
 				<PagesEditorSubToolbar />
 			</div>
