@@ -1,0 +1,39 @@
+.info_main {
+    margin-top: 40px;
+    margin-left: 52px;
+    margin-right: 52px;
+}
+
+.info_tabs_radio_container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    height: 44px;
+    background-color: #EDF2F7;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+}
+
+.info_tabs_radio_item {
+    height: 100%;
+    width: 100%;
+    color: #718096;
+    cursor: pointer;
+}
+.info_tabs_radio_item.selected {
+    color: #37B9F1;
+    background-color: white;
+    border-radius: 5px;
+}
+
+@media (max-width: 1000px) {
+    .info_main {
+        margin-top: 20px;
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+}
+

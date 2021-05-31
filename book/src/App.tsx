@@ -1,6 +1,7 @@
 import React from "react"
 import { useTranslation } from "react-i18next"
 import "./App.css"
+import { ToastContainer } from "react-toastify"
 import {
 	Router,
 	Switch,
@@ -10,6 +11,7 @@ import HomeView from "./views/HomeView/HomeView"
 import EditorView from "./views/EditorView/EditorView"
 import NotFoundPage from "./views/NotFoundView/NotFoundView"
 import { createBrowserHistory } from "history"
+import "react-toastify/dist/ReactToastify.css"
 
 export const customHistory = createBrowserHistory()
 
@@ -30,6 +32,7 @@ function App() {
 					</Route>
 				</Switch>
 			</Router>
+			<ToastContainer />
 		</div>
 	)
 }

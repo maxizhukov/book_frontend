@@ -31,3 +31,12 @@
     border: 2px solid #30a6d9;
     color: #30a6d9;
 }
+
+button.full {
+    width: 100%!important;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

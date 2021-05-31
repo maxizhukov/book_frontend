@@ -21,6 +21,7 @@ interface CustomProps {
 
 function EditorMenList({categories, menuState, avatars}:CustomProps) {
 	const dispatch = useDispatch()
+	const avatarIndex:any = +window.location.search.slice(1,2)
 
 	// define array of posts
 	const [currentPosts, setCurrentPosts] = useState([])
@@ -61,22 +62,22 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 	// Set chosen data
 	useEffect(() => {
 		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
-			setChosenItem(avatars[0].faceOval)
+			setChosenItem(avatars[avatarIndex].faceOval)
 		}
 		if ( menuState.category === "hair") {
-			setChosenItem(avatars[0].hair)
+			setChosenItem(avatars[avatarIndex].hair)
 		}
 		if (menuState.category === "eyes") {
-			setChosenItem(avatars[0].eyes)
+			setChosenItem(avatars[avatarIndex].eyes)
 		}
 		if (menuState.category === "eyebrows") {
-			setChosenItem(avatars[0].eyebrows)
+			setChosenItem(avatars[avatarIndex].eyebrows)
 		}
 		if (menuState.category === "lips") {
-			setChosenItem(avatars[0].lips)
+			setChosenItem(avatars[avatarIndex].lips)
 		}
 		if (menuState.category === "nose") {
-			setChosenItem(avatars[0].nose)
+			setChosenItem(avatars[avatarIndex].nose)
 		}
 	}, [menuState, avatars])
 
@@ -91,8 +92,8 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 					img: ""
 				}
 				face.types.forEach((item:any) => {
-					if (avatars[0].skinName) {
-						if (avatars[0].skinName === item.name) {
+					if (avatars[avatarIndex].skinName) {
+						if (avatars[avatarIndex].skinName === item.name) {
 							faceObj.img = item.img
 						}
 					} else {
@@ -114,8 +115,8 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 						img: ""
 					}
 					hair.types.forEach((item:any) => {
-						if (avatars[0].hairColor) {
-							if (avatars[0].hairColor === item.name) {
+						if (avatars[avatarIndex].hairColor) {
+							if (avatars[avatarIndex].hairColor === item.name) {
 								hairObj.img = item.img
 							}
 						} else {
@@ -138,8 +139,8 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 						img: ""
 					}
 					eyes.types.forEach((item:any) => {
-						if (avatars[0].eyesColor) {
-							if (avatars[0].eyesColor === item.name) {
+						if (avatars[avatarIndex].eyesColor) {
+							if (avatars[avatarIndex].eyesColor === item.name) {
 								eyesObj.img = item.img
 							}
 						} else {
@@ -162,8 +163,8 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 						img: ""
 					}
 					eyebrows.types.forEach((item:any) => {
-						if (avatars[0].eyebrowsColor) {
-							if (avatars[0].eyebrowsColor === item.name) {
+						if (avatars[avatarIndex].eyebrowsColor) {
+							if (avatars[avatarIndex].eyebrowsColor === item.name) {
 								eyebrowsObj.img = item.img
 							}
 						} else {
@@ -186,8 +187,8 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 						img: ""
 					}
 					lips.types.forEach((item:any) => {
-						if (avatars[0].lipsColor) {
-							if (avatars[0].lipsColor === item.name) {
+						if (avatars[avatarIndex].lipsColor) {
+							if (avatars[avatarIndex].lipsColor === item.name) {
 								lipsObj.img = item.img
 							}
 						} else {
@@ -215,7 +216,6 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 					noseObj.name = nose.name
 					temporaryArray.push(noseObj)
 				})
-				console.log(temporaryArray)
 				setCurrentPosts(temporaryArray)
 			}
 		} else {
@@ -231,28 +231,28 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		setChosenItem(name)
 		const avatarsCopy = [...avatars]
 		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
-			avatarsCopy[0].faceOval = img
-			avatarsCopy[0].faceName = name
+			avatarsCopy[avatarIndex].faceOval = img
+			avatarsCopy[avatarIndex].faceName = name
 		}
 		if ( menuState.category === "hair") {
-			avatarsCopy[0].hair = img
-			avatarsCopy[0].hairName = name
+			avatarsCopy[avatarIndex].hair = img
+			avatarsCopy[avatarIndex].hairName = name
 		}
 		if ( menuState.category === "eyes") {
-			avatarsCopy[0].eyes = img
-			avatarsCopy[0].eyesName = name
+			avatarsCopy[avatarIndex].eyes = img
+			avatarsCopy[avatarIndex].eyesName = name
 		}
 		if ( menuState.category === "eyebrows") {
-			avatarsCopy[0].eyebrows = img
-			avatarsCopy[0].eyebrowsName = name
+			avatarsCopy[avatarIndex].eyebrows = img
+			avatarsCopy[avatarIndex].eyebrowsName = name
 		}
 		if ( menuState.category === "lips") {
-			avatarsCopy[0].lips = img
-			avatarsCopy[0].lipsName = name
+			avatarsCopy[avatarIndex].lips = img
+			avatarsCopy[avatarIndex].lipsName = name
 		}
 		if ( menuState.category === "nose") {
-			avatarsCopy[0].nose = img
-			avatarsCopy[0].noseName = name
+			avatarsCopy[avatarIndex].nose = img
+			avatarsCopy[avatarIndex].noseName = name
 		}
 		dispatch(changeAvatar(avatarsCopy))
 	}

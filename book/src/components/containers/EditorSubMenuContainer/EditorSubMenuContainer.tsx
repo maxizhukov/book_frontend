@@ -16,6 +16,7 @@ interface CustomProps {
 function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
+	const avatarIndex:any = +window.location.search.slice(1,2)
 
 	const handleItemClick = (category:string) => {
 		dispatch(handleAvatarMenu(menuState.category, menuState.subCategories, category))
@@ -24,86 +25,86 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 	// Pick face color
 	const pickFaceColor = (name:string) => {
 		const avatarsCopy = [...avatars]
-		avatarsCopy[0].skinName = name
+		avatarsCopy[avatarIndex].skinName = name
 		let newFaceImage:string = ""
 		categories.facesOval.items.forEach((item:any) => {
-			if (item.name === avatars[0].faceName) {
+			if (item.name === avatars[avatarIndex].faceName) {
 				item.types.forEach((type:any) => {
-					if (type.name === avatars[0].skinName) {
+					if (type.name === avatars[avatarIndex].skinName) {
 						newFaceImage = type.img
 					}
 				})
 			}
 		})
-		avatarsCopy[0].faceOval = `http://localhost:5000/${newFaceImage}`
+		avatarsCopy[avatarIndex].faceOval = `http://localhost:5000/${newFaceImage}`
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick eyes color
 	const pickEyesColor = (name:string) => {
 		const avatarsCopy = [...avatars]
-		avatarsCopy[0].eyesColor = name
+		avatarsCopy[avatarIndex].eyesColor = name
 		let newEyesImage:string = ""
 		categories.eyes.items.forEach((item:any) => {
-			if (item.name === avatars[0].eyesName) {
+			if (item.name === avatars[avatarIndex].eyesName) {
 				item.types.forEach((type:any) => {
-					if (type.name === avatars[0].eyesColor) {
+					if (type.name === avatars[avatarIndex].eyesColor) {
 						newEyesImage = type.img
 					}
 				})
 			}
 		})
-		avatarsCopy[0].eyes = `http://localhost:5000/${newEyesImage}`
+		avatarsCopy[avatarIndex].eyes = `http://localhost:5000/${newEyesImage}`
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick eyebrows color
 	const pickEyebrowsColor = (name:string) => {
 		const avatarsCopy = [...avatars]
-		avatarsCopy[0].eyebrowsColor = name
+		avatarsCopy[avatarIndex].eyebrowsColor = name
 		let newEyesImage:string = ""
 		categories.eyebrows.items.forEach((item:any) => {
-			if (item.name === avatars[0].eyebrowsName) {
+			if (item.name === avatars[avatarIndex].eyebrowsName) {
 				item.types.forEach((type:any) => {
-					if (type.name === avatars[0].eyebrowsColor) {
+					if (type.name === avatars[avatarIndex].eyebrowsColor) {
 						newEyesImage = type.img
 					}
 				})
 			}
 		})
-		avatarsCopy[0].eyebrows = `http://localhost:5000/${newEyesImage}`
+		avatarsCopy[avatarIndex].eyebrows = `http://localhost:5000/${newEyesImage}`
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick eyebrows color
 	const pickLipsColor = (name:string) => {
 		const avatarsCopy = [...avatars]
-		avatarsCopy[0].lipsColor = name
+		avatarsCopy[avatarIndex].lipsColor = name
 		let newLipsImage:string = ""
 		categories.lips.items.forEach((item:any) => {
-			if (item.name === avatars[0].lipsName) {
+			if (item.name === avatars[avatarIndex].lipsName) {
 				item.types.forEach((type:any) => {
-					if (type.name === avatars[0].lipsColor) {
+					if (type.name === avatars[avatarIndex].lipsColor) {
 						newLipsImage = type.img
 					}
 				})
 			}
 		})
-		avatarsCopy[0].lips = `http://localhost:5000/${newLipsImage}`
+		avatarsCopy[avatarIndex].lips = `http://localhost:5000/${newLipsImage}`
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick hair color
 	const pickHairColor = (name:string) => {
 		const avatarsCopy = [...avatars]
-		avatarsCopy[0].hairColor = name
+		avatarsCopy[avatarIndex].hairColor = name
 		let newHairImage:string = ""
 		categories.hair.items.forEach((item:any) => {
-			if (item.name === avatars[0].hairName) {
+			if (item.name === avatars[avatarIndex].hairName) {
 				item.types.forEach((type:any) => {
-					if (type.name === avatars[0].hairColor) {
+					if (type.name === avatars[avatarIndex].hairColor) {
 						newHairImage = type.img
 					}
 				})
 			}
 		})
-		avatarsCopy[0].hair = `http://localhost:5000/${newHairImage}`
+		avatarsCopy[avatarIndex].hair = `http://localhost:5000/${newHairImage}`
 		dispatch(changeAvatar(avatarsCopy))
 	}
 
@@ -149,7 +150,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 					{Array.from(Array(4).keys()).map((key:number) => (
 						<div
 							key={key}
-							className={avatars[0].skinName === (+key + 1).toString()
+							className={avatars[avatarIndex].skinName === (+key + 1).toString()
 								? "color_dot_container mr-10 selected"
 								: "color_dot_container mr-10"
 							}
@@ -172,7 +173,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 							<div
 								style={{marginTop: "20px"}}
 								key={key}
-								className={avatars[0].eyesColor === (+key + 1).toString()
+								className={avatars[avatarIndex].eyesColor === (+key + 1).toString()
 									? "color_dot_container mr-10 selected"
 									: "color_dot_container mr-10"
 								}
@@ -196,7 +197,8 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 							<div
 								style={{marginTop: "20px"}}
 								key={key}
-								className={avatars[0].eyebrowsColor === (+key + 1).toString()
+								className={avatars[avatarIndex].eyebrowsColor
+								=== (+key + 1).toString()
 									? "color_dot_container mr-10 selected"
 									: "color_dot_container mr-10"
 								}
@@ -220,7 +222,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 							<div
 								style={{marginTop: "20px"}}
 								key={key}
-								className={avatars[0].lipsColor === (+key + 1).toString()
+								className={avatars[avatarIndex].lipsColor === (+key + 1).toString()
 									? "color_dot_container mr-10 selected"
 									: "color_dot_container mr-10"
 								}
@@ -244,7 +246,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 							<div
 								style={{marginTop: "20px"}}
 								key={key}
-								className={avatars[0].hairColor === (+key + 1).toString()
+								className={avatars[avatarIndex].hairColor === (+key + 1).toString()
 									? "color_dot_container mr-10 selected"
 									: "color_dot_container mr-10"
 								}

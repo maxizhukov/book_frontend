@@ -2,7 +2,13 @@
   "editor": {
     "avatar": {
       "window_back_btn": "Back",
-      "window_save_btn": "Save"
+      "window_save_btn": "Save",
+      "window_next_btn": "Next",
+      "character_name_label": "Write name of your character",
+      "relationship_period": "Length of your relationship",
+      "male": "Male",
+      "female": "Female",
+      "transgender": "Transgender"
     },
     "menu": {
       "faceOval": "Face oval",
@@ -23,5 +29,9 @@
         "outdoor": "Outdoor"
       }
     }
+  },
+  "warnings": {
+    "name_required": "Name field is required",
+    "not_all_character_finished": "Not all characters are finished"
   }
 }

@@ -17,6 +17,11 @@ button {
     font-size: 14px;
 }
 
+input {
+    -webkit-appearance: none;
+    font-family: 'Roboto', sans-serif;
+}
+
 .center {
     display: flex;
     justify-content: center;

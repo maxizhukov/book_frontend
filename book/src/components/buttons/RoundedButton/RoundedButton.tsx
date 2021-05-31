@@ -3,10 +3,15 @@ import "./RoundedButton.css"
 
 interface CustomProps {
 	customStyle: string,
-	text: string
+	text: string,
+	handleClick?: any,
+	full?: boolean,
+	styles?: any,
+	disabled?: boolean
 }
 
-export default function RoundedButton({customStyle, text}:CustomProps) {
+export default function RoundedButton(
+	{customStyle, text, handleClick, full, styles, disabled}:CustomProps) {
 	const [btnStyle, setBtnStyle] = useState("primary")
 	
 	useEffect(() => {
@@ -21,9 +26,16 @@ export default function RoundedButton({customStyle, text}:CustomProps) {
 			setBtnStyle("primary")
 		}
 	}, [customStyle])
+
+	const style = `${full && "full"} ${btnStyle}`
 	
 	return(
-		<button className={`rounded_btn ${btnStyle}`}>
+		<button
+			disabled={disabled}
+			style={styles}
+			onClick={handleClick}
+			className={`rounded_btn ${style}`}
+		>
 			{text}
 		</button>
 	)
