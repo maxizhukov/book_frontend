@@ -1,5 +1,5 @@
 import {
-	HANDLE_AVATAR_MENU,
+	HANDLE_AVATAR_MENU, HANDLE_CHOSEN_ITEM,
 	HANDLE_PAGE,
 	HANDLE_PAGES_MENU
 } from "../types/editorMenuTypes"
@@ -43,3 +43,12 @@ export function handlePage(pageNumber:string) {
 		payload: {pageNumber}
 	}
 }
+
+// Handle chosen item
+export function handleChosenItem(item:any) {
+	return {
+		type: HANDLE_CHOSEN_ITEM,
+		payload: item
+	}
+}
+

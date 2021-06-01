@@ -12,7 +12,12 @@
     height: 80%;
     position: relative;
 }
-
+.pages_container {
+    width: 90%;
+    height: 90%;
+    position: relative;
+    background-size: cover;
+}
 /*Styles for elements*/
 
 .avatar_faceSkin {

@@ -43,3 +43,35 @@
 .page_title {
     color: #37B9F1;
 }
+
+.page_element {
+    border: none;
+    overflow: hidden;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.page_element:hover {
+    border: 2px dashed black;
+    cursor: pointer;
+}
+
+.page_element:focus {
+    border: 2px dashed black;
+    cursor: pointer;
+}
+
+.page_avatar_box {
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.page_avatar_box:hover {
+    border: 2px dashed black;
+}
+
