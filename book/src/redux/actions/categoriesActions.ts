@@ -5,7 +5,10 @@ import {
 	GET_EYEBROWS,
 	GET_EYES,
 	GET_FACES_OVAL,
-	GET_HAIR, GET_LIPS, GET_NOSES
+	GET_HAIR,
+	GET_LIPS,
+	GET_NOSES,
+	GET_PAGES
 } from "../types/categoriesTypes"
 import {url} from "../../core/endpoints"
 import axios from "axios"
@@ -150,6 +153,30 @@ export const getNoses = () =>
 				dispatch({
 					type: CATEGORIES_ERROR,
 					payload: "get_nose"
+				})
+			}
+		}
+	}
+
+// Get pages
+export const getPages = () =>
+	async (dispatch: Dispatch<categoriesTypes>) => {
+		const fullUrl = `${url}pages`
+		try {
+			const response = await axios.get(fullUrl)
+			dispatch({
+				type: GET_PAGES,
+				payload: response.data
+			})
+		} catch (e) {
+			if (e.request.status === 404) {
+				customHistory.push("/error")
+			} else if (e.request.status === 500) {
+				customHistory.push("/server-error")
+			} else {
+				dispatch({
+					type: CATEGORIES_ERROR,
+					payload: "get_pages"
 				})
 			}
 		}

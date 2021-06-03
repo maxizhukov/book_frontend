@@ -4,6 +4,7 @@ export const GET_EYES = "GET_EYES"
 export const GET_EYEBROWS = "GET_EYEBROWS"
 export const GET_LIPS = "GET_LIPS"
 export const GET_NOSES = "GET_NOSES"
+export const GET_PAGES = "GET_PAGES"
 export const CATEGORIES_ERROR = "CATEGORIES_ERROR"
 
 interface getFacesOvalType {
@@ -36,6 +37,11 @@ interface getNosesType {
 	payload: any
 }
 
+interface getPagesType {
+	type: typeof GET_PAGES
+	payload: any
+}
+
 interface categoriesErrorType {
 	type: typeof CATEGORIES_ERROR
 	payload: any
@@ -48,4 +54,5 @@ export type categoriesTypes =
 	getEyesType |
 	getEyebrowsType |
 	getLipsType |
-	getNosesType
+	getNosesType |
+	getPagesType

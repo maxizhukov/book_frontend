@@ -6,7 +6,7 @@ import {
 	GET_FACES_OVAL,
 	GET_HAIR,
 	GET_LIPS,
-	GET_NOSES
+	GET_NOSES, GET_PAGES
 } from "../types/categoriesTypes"
 
 const initialState = {
@@ -17,7 +17,8 @@ const initialState = {
 	eyes: [],
 	eyebrows: [],
 	lips: [],
-	nose: []
+	nose: [],
+	pages: []
 }
 
 export const categoriesReducer = (
@@ -58,6 +59,12 @@ export const categoriesReducer = (
 		return{
 			...state,
 			nose: action.payload,
+			loading: false
+		}
+	case GET_PAGES:
+		return{
+			...state,
+			pages: action.payload,
 			loading: false
 		}
 	case CATEGORIES_ERROR:

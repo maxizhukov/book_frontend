@@ -2,17 +2,23 @@ import React, {useEffect, useRef, useState} from "react"
 import "./BookPages.css"
 import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
 import {useTranslation} from "react-i18next"
-import ElementsTabs from "../../containers/Tabs/ElementsTabs/ElementsTabs"
-import EditorTabs from "../../containers/Tabs/EditorTabs/EditorTabs"
 import {useParams} from "react-router"
 import {useHistory} from "react-router-dom"
 import sampleImage from "../../../img/photo_2021-06-01 19.32.15.jpeg"
 import {getCookie} from "../../../utils/cookie"
 import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
-import {useDispatch} from "react-redux"
-import {handleChosenItem} from "../../../redux/actions/editorMenuActions"
+import {connect, useDispatch} from "react-redux"
+import {handleChosenItem, handlePagesMenu} from "../../../redux/actions/editorMenuActions"
+import {RootState} from "../../../redux/reducers/rootReducer"
+import {changeAvatar} from "../../../redux/actions/avatarsActions"
+import PagesEditorToolbar from "../../containers/PagesEditorToolbar/PagesEditorToolbar"
+import PagesMenuContainer from "../../containers/PagesMenuContainer/PagesMenuContainer"
 
-export default function BookPages() {
+interface CustomProps {
+	chosenItem?: any
+}
+
+function BookPages({chosenItem}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const history = useHistory()
@@ -25,6 +31,7 @@ export default function BookPages() {
 	useEffect(() => {
 		const jsonStr = getCookie("mycookie")
 		const arr = JSON.parse(jsonStr)
+		dispatch(changeAvatar(arr))
 		setAvatarsFromCookie(arr)
 	}, [])
 
@@ -44,12 +51,6 @@ export default function BookPages() {
 			setContainerWidth(width)
 		}
 	}, [pageRef.current, loadingPage])
-
-	const handleItemFocus = (name:string, i:number) => {
-		dispatch(handleChosenItem(
-			{name: name, index: i}
-		))
-	}
 
 	/*TEST OBJECT*/
 	const testObj:any = {
@@ -96,16 +97,7 @@ export default function BookPages() {
 	useEffect(() => {
 		setPageNumber(id.number)
 	}, [id])
-	
-	const [selectedTab, setSelectedTab] = useState("1")
-	const renderTab = () => {
-		switch (selectedTab) {
-		case "1":
-			return <ElementsTabs />
-		case "2":
-			return <EditorTabs />
-		}
-	}
+
 
 	// Handle pages click
 	const previousPage = () => {
@@ -120,6 +112,17 @@ export default function BookPages() {
 			const nexPage = +pageNumber + 1
 			history.push(`/editor/pages/${nexPage}`)
 		}
+	}
+
+	const handleItemFocus = (name:string, i:string) => {
+		dispatch(handleChosenItem(
+			{name: name, index: i}
+		))
+	}
+
+	// Handle menu click
+	const handleMenuClick = (menuItem:string) => {
+		dispatch(handlePagesMenu(menuItem, [], ""))
 	}
 
 	return(
@@ -157,6 +160,7 @@ export default function BookPages() {
 									style={{backgroundImage: `url("${sampleImage}")`}}
 								>
 									<div
+										onClick={() => handleItemFocus("avatar", "1")}
 										className="page_avatar_box"
 										style={testObj.personOne.style}
 									>
@@ -165,6 +169,7 @@ export default function BookPages() {
 										/>
 									</div>
 									<div
+										onClick={() => handleItemFocus("avatar", "2")}
 										className="page_avatar_box"
 										style={testObj.personTwo.style}
 									>
@@ -175,7 +180,9 @@ export default function BookPages() {
 									{
 										testObj.texts.map((text:any, i:number) => (
 											<textarea
-												onClick={() => handleItemFocus("text", i)}
+												onClick={() => handleItemFocus(
+													"text",
+													i.toString())}
 												className="page_element"
 												key="text"
 												style={text.style}
@@ -190,29 +197,19 @@ export default function BookPages() {
 					}
 				</div>
 			</div>
-			<div className="avatar_page_menu">
-				<div className="row" style={{backgroundColor: "#f0f0f0"}}>
-					<div
-						onClick={() => setSelectedTab("1")}
-						className={selectedTab === "1"
-							? "pages_menu_dropdown selected"
-							: "pages_menu_dropdown"}
-					>
-						Elements
-					</div>
-					<div
-						onClick={() => setSelectedTab("2")}
-						className={selectedTab === "2"
-							? "pages_menu_dropdown selected"
-							: "pages_menu_dropdown"}
-					>
-						Editor
-					</div>
-				</div>
-				{renderTab()}
+			<div className="avatar_page_menu" >
+				<PagesEditorToolbar />
+				<PagesMenuContainer />
 			</div>
 		</div>
 	)
 }
 
+const mapStateToProps = (state:RootState) => {
+	return {
+		chosenItem: state.editorMenu.chosenItem
+	}
+}
+
+export default connect(mapStateToProps, null)(BookPages)
 

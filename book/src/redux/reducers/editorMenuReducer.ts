@@ -13,7 +13,7 @@ const initialState = {
 	},
 	pagesMenu: {
 		subCategories: [],
-		chosenCategory: "",
+		chosenCategory: "background",
 		chosenSubCategory: ""
 	},
 	page: "0",
