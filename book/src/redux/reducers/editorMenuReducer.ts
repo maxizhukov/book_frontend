@@ -12,9 +12,9 @@ const initialState = {
 		chosenSubCategory: "editor.menu.faceOval"
 	},
 	pagesMenu: {
-		subCategories: [],
+		subCategories: ["image", "text"],
 		chosenCategory: "background",
-		chosenSubCategory: ""
+		chosenSubCategory: "image"
 	},
 	page: "0",
 	chosenItem: {

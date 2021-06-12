@@ -5,16 +5,18 @@ interface CustomProps {
 	item: any,
 	chosenItem: boolean,
 	menuState?: any,
-	handleItemClick: (name:string, img:string) => void
+	handleItemClick: (name:string, img:string) => void,
+	preview?: boolean
 }
 
-export default function EditorListItem({item, chosenItem, menuState, handleItemClick}:CustomProps) {
+export default function EditorListItem({item, chosenItem, menuState,
+										   handleItemClick, preview}:CustomProps) {
 	const url = "http://localhost:5000/"
-	const image = `${url}${item.img}`
+	const image = preview ? `${url}${item.preview}` : `${url}${item.img}`
 
 	return(
 		<div
-			onClick={() => handleItemClick(item.name, image)}
+			onClick={() => handleItemClick(item.name, preview ? item.img : image)}
 			className={chosenItem ? "editor_list_item selected" : "editor_list_item"}
 			style={{backgroundImage: `url("${image}")`}}
 		>

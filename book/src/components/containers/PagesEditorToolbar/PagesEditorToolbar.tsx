@@ -19,8 +19,8 @@ function PagesEditorToolbar({menuState}:CustomProps) {
 		let chosenSubCategory = ""
 		switch (category) {
 		case "background":
-			subCategories = ["indoor", "outdoor"]
-			chosenSubCategory = "indoor"
+			subCategories = ["image", "text"]
+			chosenSubCategory = "image"
 			break
 		default: 
 			subCategories = []

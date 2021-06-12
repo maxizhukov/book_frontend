@@ -13,6 +13,9 @@ import {RootState} from "../../../redux/reducers/rootReducer"
 import {changeAvatar} from "../../../redux/actions/avatarsActions"
 import PagesEditorToolbar from "../../containers/PagesEditorToolbar/PagesEditorToolbar"
 import PagesMenuContainer from "../../containers/PagesMenuContainer/PagesMenuContainer"
+import testOne from "../../../img/p1p1c1.png"
+import testTwo from "../../../img/p1p2c1.png"
+import PagesEditorSubToolbar from "../../containers/PagesEditorSubToolbar/PagesEditorSubToolbar"
 
 interface CustomProps {
 	chosenItem?: any
@@ -134,7 +137,6 @@ function BookPages({chosenItem}:CustomProps) {
 						customStyle="outlined"
 						text={t("editor.pages.back_btn")}
 					/>
-
 					{pageNumber === "0"
 						?
 						<p className="page_title">{t("editor.pages.cover")}</p>
@@ -159,6 +161,30 @@ function BookPages({chosenItem}:CustomProps) {
 									className="pages_container"
 									style={{backgroundImage: `url("${sampleImage}")`}}
 								>
+									<div
+										onClick={() => handleItemFocus("avatar", "1")}
+										className="page_avatar_box"
+										style={{
+											position: "absolute",
+											left: "17%",
+											top: "60%",
+											width: "22%"
+										}}
+									>
+										<img src={testOne} style={{width: "100%"}} alt="personOne"/>
+									</div>
+									<div
+										onClick={() => handleItemFocus("avatar", "1")}
+										className="page_avatar_box"
+										style={{
+											position: "absolute",
+											left: "43%",
+											top: "54%",
+											width: "22%"
+										}}
+									>
+										<img src={testTwo} style={{width: "100%"}} alt="personTwo"/>
+									</div>
 									<div
 										onClick={() => handleItemFocus("avatar", "1")}
 										className="page_avatar_box"
@@ -199,6 +225,7 @@ function BookPages({chosenItem}:CustomProps) {
 			</div>
 			<div className="avatar_page_menu" >
 				<PagesEditorToolbar />
+				<PagesEditorSubToolbar />
 				<PagesMenuContainer />
 			</div>
 		</div>

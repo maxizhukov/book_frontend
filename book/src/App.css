@@ -70,6 +70,10 @@ input {
     cursor: pointer;
 }
 
+.test path {
+    fill: #9b2323;
+}
+
 @media (max-width: 1000px) {
     .toolbar_container {
         padding-top: 5px;

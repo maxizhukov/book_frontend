@@ -261,6 +261,8 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		return `${name}${Math.random().toString()}`
 	}
 
+	console.log(chosenItem)
+
 	return(
 		<div className="editor_items_list">
 			{categories.loading

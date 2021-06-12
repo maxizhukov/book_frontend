@@ -25,6 +25,7 @@
         "background": "Background",
         "actions": "Actions",
         "text": "Text",
+        "image": "Images",
         "elements": "Elements",
         "indoor": "Indoor",
         "outdoor": "Outdoor"
