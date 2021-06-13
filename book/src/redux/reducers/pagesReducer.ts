@@ -1,12 +1,8 @@
 import {CHANGE_PAGES, pagesTypes} from "../types/pagesTypes"
+import {pagesData} from "../../utils/pagesData"
 
 const initialState = {
-	pages: [
-		{
-			backgroundName: "1",
-			background: "http://localhost:5000/uploads/myImage-1623508388362.jpeg"
-		}
-	]
+	pages: pagesData
 }
 
 export const pagesReducer = (

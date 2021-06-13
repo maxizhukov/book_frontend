@@ -4,7 +4,6 @@ import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
 import {useTranslation} from "react-i18next"
 import {useParams} from "react-router"
 import {useHistory} from "react-router-dom"
-import sampleImage from "../../../img/photo_2021-06-01 19.32.15.jpeg"
 import {getCookie} from "../../../utils/cookie"
 import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
 import {connect, useDispatch} from "react-redux"
@@ -13,23 +12,38 @@ import {RootState} from "../../../redux/reducers/rootReducer"
 import {changeAvatar} from "../../../redux/actions/avatarsActions"
 import PagesEditorToolbar from "../../containers/PagesEditorToolbar/PagesEditorToolbar"
 import PagesMenuContainer from "../../containers/PagesMenuContainer/PagesMenuContainer"
-import testOne from "../../../img/p1p1c1.png"
-import testTwo from "../../../img/p1p2c1.png"
 import PagesEditorSubToolbar from "../../containers/PagesEditorSubToolbar/PagesEditorSubToolbar"
+import {changePages} from "../../../redux/actions/pagesActions"
 
 interface CustomProps {
-	chosenItem?: any
+	chosenItem?: any,
+	pages?: any,
+	avatars?: any
 }
 
-function BookPages({chosenItem}:CustomProps) {
+function BookPages({chosenItem, pages, avatars}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const id:any = useParams()
 
+	const url = "http://localhost:5000/"
+
 	const [avatarsFromCookie, setAvatarsFromCookie] = useState([])
 
 	const [loadingPage, setLoadingPage] = useState(true)
+
+	// Current page
+	const [currentPage, setCurrentPage] = useState("")
+
+	// Set page data
+	const [pageData, setPageData] = useState<any>({})
+
+	// Take page from url and save to state
+	useEffect(() => {
+		setCurrentPage(window.location.pathname.slice(14, +window.location.pathname.length))
+		setPageData(pages[window.location.pathname.slice(14, +window.location.pathname.length)])
+	}, [window.location.pathname])
 
 	useEffect(() => {
 		const jsonStr = getCookie("mycookie")
@@ -37,6 +51,18 @@ function BookPages({chosenItem}:CustomProps) {
 		dispatch(changeAvatar(arr))
 		setAvatarsFromCookie(arr)
 	}, [])
+
+	// Change font size
+	const changeFontSize = (style:any) => {
+		const changedStyles = {...style}
+		const fontSize = containerWidth / +changedStyles.fontSize
+		const width = containerWidth / +changedStyles.width
+		const height = containerWidth / +changedStyles.height
+		changedStyles.fontSize = `${fontSize}px`
+		changedStyles.width = `${width}px`
+		changedStyles.height = `${height}px`
+		return changedStyles
+	}
 
 	// Show loading till page will not rendered
 	useEffect(() => {
@@ -54,46 +80,6 @@ function BookPages({chosenItem}:CustomProps) {
 			setContainerWidth(width)
 		}
 	}, [pageRef.current, loadingPage])
-
-	/*TEST OBJECT*/
-	const testObj:any = {
-		personOne: {
-			style: {
-				position: "absolute",
-				left: "18%",
-				top: "43%",
-				zIndex: 0,
-				width: "20%"
-			}
-		},
-		personTwo: {
-			style: {
-				position: "absolute",
-				left: "42%",
-				top: "44%",
-				zIndex: 0,
-				width: "20%"
-			}
-		},
-		texts: [
-			{
-				text: "LOVE",
-				style: {
-					position: "absolute",
-					left: "46%",
-					top: "15%",
-					width: `${containerWidth/6}px`,
-					height: `${containerWidth/13}px`,
-					fontSize: `${containerWidth/17}px`,
-					fontWeight: "bold",
-					color: "red",
-					fontFamily: "Montserrat"
-				}
-			}
-		]
-	}
-
-
 
 	const [pageNumber, setPageNumber] = useState("0")
 
@@ -123,9 +109,25 @@ function BookPages({chosenItem}:CustomProps) {
 		))
 	}
 
+	const handleTextChange = (e:any, i:number) => {
+		const pagesCopy:any = [...pages]
+		pagesCopy[currentPage].pageItem.style.texts[i].text = e.target.value
+		dispatch(changePages(pagesCopy))
+	}
+
 	// Handle menu click
 	const handleMenuClick = (menuItem:string) => {
 		dispatch(handlePagesMenu(menuItem, [], ""))
+	}
+
+	const getImageUrl = (person:number) => {
+		const gender = avatars[person].avatarGender === "male" ? "men" : "women"
+		const skin = `skin_${avatars[person].skinName}`
+		if (person === 0) {
+			return `${url}${pageData.pageItem.style.personOne.body[gender][skin]}`
+		} else {
+			return `${url}${pageData.pageItem.style.personTwo.body[gender][skin]}`
+		}
 	}
 
 	return(
@@ -159,59 +161,44 @@ function BookPages({chosenItem}:CustomProps) {
 								<div
 									ref={pageRef}
 									className="pages_container"
-									style={{backgroundImage: `url("${sampleImage}")`}}
+									style={{backgroundImage:
+											`url("${url}${pageData.pageItem.types[0].img}")`
+									}}
 								>
 									<div
-										onClick={() => handleItemFocus("avatar", "1")}
-										className="page_avatar_box"
-										style={{
-											position: "absolute",
-											left: "17%",
-											top: "60%",
-											width: "22%"
-										}}
+										style={pageData.pageItem.style.personOne.body.style}
 									>
-										<img src={testOne} style={{width: "100%"}} alt="personOne"/>
+										<img src={getImageUrl(0)} style={{width: "100%"}} alt="personOne"/>
 									</div>
 									<div
-										onClick={() => handleItemFocus("avatar", "1")}
-										className="page_avatar_box"
-										style={{
-											position: "absolute",
-											left: "43%",
-											top: "54%",
-											width: "22%"
-										}}
+										style={pageData.pageItem.style.personTwo.body.style}
 									>
-										<img src={testTwo} style={{width: "100%"}} alt="personTwo"/>
+										<img src={getImageUrl(1)} style={{width: "100%"}} alt="personTwo"/>
 									</div>
 									<div
-										onClick={() => handleItemFocus("avatar", "1")}
-										className="page_avatar_box"
-										style={testObj.personOne.style}
+										style={pageData.pageItem.style.personOne.style}
 									>
 										<AvatarContainer
-											pagesAvatar={avatarsFromCookie[0]}
+											pagesAvatar={avatars[0]}
 										/>
 									</div>
 									<div
-										onClick={() => handleItemFocus("avatar", "2")}
-										className="page_avatar_box"
-										style={testObj.personTwo.style}
+										style={pageData.pageItem.style.personTwo.style}
 									>
 										<AvatarContainer
-											pagesAvatar={avatarsFromCookie[1]}
+											pagesAvatar={avatars[1]}
 										/>
 									</div>
 									{
-										testObj.texts.map((text:any, i:number) => (
+										pageData.pageItem.style.texts.map((text:any, i:number) => (
 											<textarea
+												onChange={(value:any) => handleTextChange(value, i)}
 												onClick={() => handleItemFocus(
 													"text",
 													i.toString())}
 												className="page_element"
-												key="text"
-												style={text.style}
+												key={`${currentPage}${text}${i}`}
+												style={changeFontSize(text.style)}
 												defaultValue={text.text}
 											/>
 										))
@@ -234,7 +221,9 @@ function BookPages({chosenItem}:CustomProps) {
 
 const mapStateToProps = (state:RootState) => {
 	return {
-		chosenItem: state.editorMenu.chosenItem
+		chosenItem: state.editorMenu.chosenItem,
+		pages: state.pages.pages,
+		avatars: state.avatars.avatars
 	}
 }
 

@@ -4,22 +4,42 @@ import {RootState} from "../../../redux/reducers/rootReducer"
 import {connect, useDispatch} from "react-redux"
 import {getPages} from "../../../redux/actions/categoriesActions"
 import EditorListItem from "../EditorListItem/EditorListItem"
+import {changePages} from "../../../redux/actions/pagesActions"
 
 interface CustomProps {
 	menu?: any,
 	categories?: any,
-	pages?: any
+	pages?: any,
+	avatars?: any
 }
 
-function PagesMenuContainer({menu, categories, pages}:CustomProps) {
+function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
 	const dispatch = useDispatch()
 
 	// Define current posts
 	const [currentPosts, setCurrentPosts] = useState([])
 
+	// current page
+	const [currentPage, setCurrentPage] = useState("")
+
+	// Take page from url and save to state
+	useEffect(() => {
+		setCurrentPage(window.location.pathname.slice(14, window.location.pathname.length))
+	}, [])
+
 	useEffect(() => {
 		if (menu.chosenCategory === "background") {
-			dispatch(getPages())
+			if (menu.chosenSubCategory === "image") {
+				const genderOne = avatars[0].avatarGender === "male" ? "m" : "w"
+				const genderTwo = avatars[1].avatarGender === "male" ? "m" : "w"
+				const skinOne = `s${avatars[0].skinName}`
+				const skinTwo = `s${avatars[1].skinName}`
+				const personOne = `${genderOne}${skinOne}`
+				const personTwo = `${genderTwo}${skinTwo}`
+				dispatch(getPages("img", personOne, personTwo))
+			} else {
+				dispatch(getPages("img"))
+			}
 		}
 	}, [dispatch])
 
@@ -45,24 +65,9 @@ function PagesMenuContainer({menu, categories, pages}:CustomProps) {
 
 	// Set chosen data
 	useEffect(() => {
-		/*if (menuState.chosenSubCategory === "editor.menu.faceOval") {
-			setChosenItem(avatars[avatarIndex].faceOval)
+		if (menu.chosenSubCategory === "image") {
+			setChosenItem(pages.pages[+currentPage].background)
 		}
-		if ( menuState.category === "hair") {
-			setChosenItem(avatars[avatarIndex].hair)
-		}
-		if (menuState.category === "eyes") {
-			setChosenItem(avatars[avatarIndex].eyes)
-		}
-		if (menuState.category === "eyebrows") {
-			setChosenItem(avatars[avatarIndex].eyebrows)
-		}
-		if (menuState.category === "lips") {
-			setChosenItem(avatars[avatarIndex].lips)
-		}
-		if (menuState.category === "nose") {
-			setChosenItem(avatars[avatarIndex].nose)
-		}*/
 	}, [menu, pages])
 
 	// set name of chosen item
@@ -71,8 +76,23 @@ function PagesMenuContainer({menu, categories, pages}:CustomProps) {
 	// handle list item click
 	const handleItemClick = (name:string, img:string) => {
 		setChosenItem(name)
-		console.log(img)
-		/*const avatarsCopy = [...avatars]
+		const pagesCopy = [...pages.pages]
+		if (menu.chosenSubCategory === "image") {
+			pagesCopy[+currentPage].background = img
+			pagesCopy[+currentPage].backgroundName = name
+			categories.pages.items.forEach((post:any) => {
+				if (post.name === name) {
+					pagesCopy[+currentPage].pageItem = post
+				}
+			})
+		}
+		dispatch(changePages(pagesCopy))
+		/*const avatarsCopy = [...pages]
+		if (menu.chosenSubCategory === "image") {
+			avatarsCopy[avatarIndex].faceOval = img
+			avatarsCopy[avatarIndex].faceName = name
+		}*/
+		/*
 		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
 			avatarsCopy[avatarIndex].faceOval = img
 			avatarsCopy[avatarIndex].faceName = name
@@ -99,8 +119,6 @@ function PagesMenuContainer({menu, categories, pages}:CustomProps) {
 		}
 		dispatch(changeAvatar(avatarsCopy))*/
 	}
-
-	console.log("chosen Item", chosenItem)
 
 	const createUniqueId = (name:any) => {
 		return `${name}${Math.random().toString()}`
@@ -129,7 +147,8 @@ const mapStateToProps = (state:RootState) => {
 	return {
 		menu: state.editorMenu.pagesMenu,
 		categories: state.categories,
-		pages: state.pages
+		pages: state.pages,
+		avatars: state.avatars.avatars
 	}
 }
 

@@ -159,11 +159,20 @@ export const getNoses = () =>
 	}
 
 // Get pages
-export const getPages = () =>
+export const getPages = (type:string, personOne?:string, personTwo?:string) =>
 	async (dispatch: Dispatch<categoriesTypes>) => {
 		const fullUrl = `${url}pages`
+		const dynamicParams = {
+			type: type
+		}
+		if (personOne) {
+			Object.assign(dynamicParams, {personOne: personOne})
+		}
+		if (personTwo) {
+			Object.assign(dynamicParams, {personTwo: personTwo})
+		}
 		try {
-			const response = await axios.get(fullUrl)
+			const response = await axios.get(fullUrl, {params: dynamicParams})
 			dispatch({
 				type: GET_PAGES,
 				payload: response.data

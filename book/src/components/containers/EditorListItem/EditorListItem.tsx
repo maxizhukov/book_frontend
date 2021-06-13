@@ -16,7 +16,7 @@ export default function EditorListItem({item, chosenItem, menuState,
 
 	return(
 		<div
-			onClick={() => handleItemClick(item.name, preview ? item.img : image)}
+			onClick={() => handleItemClick(item.name, preview ? `${url}${item.img}` : image)}
 			className={chosenItem ? "editor_list_item selected" : "editor_list_item"}
 			style={{backgroundImage: `url("${image}")`}}
 		>
