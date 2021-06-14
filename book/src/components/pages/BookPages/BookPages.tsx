@@ -14,6 +14,7 @@ import PagesEditorToolbar from "../../containers/PagesEditorToolbar/PagesEditorT
 import PagesMenuContainer from "../../containers/PagesMenuContainer/PagesMenuContainer"
 import PagesEditorSubToolbar from "../../containers/PagesEditorSubToolbar/PagesEditorSubToolbar"
 import {changePages} from "../../../redux/actions/pagesActions"
+import LocalPage from "../../containers/LocalPage/LocalPage"
 
 interface CustomProps {
 	chosenItem?: any,
@@ -128,6 +129,8 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		}
 	}
 
+	const [local, setLocal] = useState(true)
+
 	return(
 		<div className="book_page">
 			<div className="avatar_page_window">
@@ -155,55 +158,59 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 						? <h1>Loading...</h1>
 						:
 						<div className="page">
-							<div className="avatar_box">
-								<div
-									ref={pageRef}
-									className="pages_container"
-									style={{backgroundImage:
-											`url("${url}${pageData.pageItem.types[0].img}")`
-									}}
-								>
+							{local
+								?
+								<LocalPage />
+								:
+								<div className="avatar_box">
 									<div
-										style={pageData.pageItem.style.personOne.body.style}
+										ref={pageRef}
+										className="pages_container"
+										style={{backgroundImage:
+												`url("${url}${pageData.pageItem.types[0].img}")`
+										}}
 									>
-										<img src={getImageUrl(0)} style={{width: "100%"}} alt="personOne"/>
-									</div>
-									<div
-										style={pageData.pageItem.style.personTwo.body.style}
-									>
-										<img src={getImageUrl(1)} style={{width: "100%"}} alt="personTwo"/>
-									</div>
-									<div
-										style={pageData.pageItem.style.personOne.style}
-									>
-										<AvatarContainer
-											pagesAvatar={avatars[0]}
-										/>
-									</div>
-									<div
-										style={pageData.pageItem.style.personTwo.style}
-									>
-										<AvatarContainer
-											pagesAvatar={avatars[1]}
-										/>
-									</div>
-									{
-										pageData.pageItem.style.texts.map((text:any, i:number) => (
-											<textarea
-												onChange={(value:any) => handleTextChange(value, i)}
-												onClick={() => handleItemFocus(
-													"text",
-													i.toString())}
-												className="page_element"
-												key={`${currentPage}${text}${i}`}
-												style={changeFontSize(text.style)}
-												defaultValue={text.text}
+										<div
+											style={pageData.pageItem.style.personOne.body.style}
+										>
+											<img src={getImageUrl(0)} style={{width: "100%"}} alt="personOne"/>
+										</div>
+										<div
+											style={pageData.pageItem.style.personTwo.body.style}
+										>
+											<img src={getImageUrl(1)} style={{width: "100%"}} alt="personTwo"/>
+										</div>
+										<div
+											style={pageData.pageItem.style.personOne.style}
+										>
+											<AvatarContainer
+												pagesAvatar={avatars[0]}
 											/>
-										))
-									}
-									{/*HERE PAGES*/}
+										</div>
+										<div
+											style={pageData.pageItem.style.personTwo.style}
+										>
+											<AvatarContainer
+												pagesAvatar={avatars[1]}
+											/>
+										</div>
+										{
+											pageData.pageItem.style.texts.map((text:any, i:number) => (
+												<textarea
+													onChange={(value:any) => handleTextChange(value, i)}
+													onClick={() => handleItemFocus(
+														"text",
+														i.toString())}
+													className="page_element"
+													key={`${currentPage}${text}${i}`}
+													style={changeFontSize(text.style)}
+													defaultValue={text.text}
+												/>
+											))
+										}
+									</div>
 								</div>
-							</div>
+							}
 						</div>
 					}
 				</div>
