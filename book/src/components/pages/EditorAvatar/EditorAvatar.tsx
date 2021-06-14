@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import { useTranslation } from "react-i18next"
 import "./EditorAvatar.css"
 import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
@@ -9,7 +9,7 @@ import {RootState} from "../../../redux/reducers/rootReducer"
 import EditorMenList from "../../containers/EditorMenuList/EditorMenuList"
 import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
 import {Link, useHistory} from "react-router-dom"
-import {createCookie} from "../../../utils/cookie"
+import {createCookie, getCookie} from "../../../utils/cookie"
 
 
 interface CustomProps {

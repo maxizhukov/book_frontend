@@ -173,6 +173,7 @@ export const getPages = (type:string, personOne?:string, personTwo?:string) =>
 		}
 		try {
 			const response = await axios.get(fullUrl, {params: dynamicParams})
+			console.log(response)
 			dispatch({
 				type: GET_PAGES,
 				payload: response.data

@@ -121,12 +121,10 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 	}
 
 	const getImageUrl = (person:number) => {
-		const gender = avatars[person].avatarGender === "male" ? "men" : "women"
-		const skin = `skin_${avatars[person].skinName}`
 		if (person === 0) {
-			return `${url}${pageData.pageItem.style.personOne.body[gender][skin]}`
+			return `${url}${pageData.pageItem.style.personOne.body.person.firstPerson}`
 		} else {
-			return `${url}${pageData.pageItem.style.personTwo.body[gender][skin]}`
+			return `${url}${pageData.pageItem.style.personOne.body.person.secondPerson}`
 		}
 	}
 
