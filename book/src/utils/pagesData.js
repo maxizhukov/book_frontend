@@ -29,7 +29,7 @@ export const pagesData = [
 						},
 						"person": {
 							"firstPerson": "uploads/myImage-1623705346873.png",
-							"secondPerson": "uploads/myImage-1623705346873.png"
+							"secondPerson": "uploads/myImage-1623793927210.png"
 						}
 					}
 				},
@@ -50,7 +50,7 @@ export const pagesData = [
 						},
 						"person": {
 							"firstPerson": "uploads/myImage-1623705346873.png",
-							"secondPerson": "uploads/myImage-1623705346873.png"
+							"secondPerson": "uploads/myImage-1623793927210.png"
 						}
 					}
 				},

@@ -120,9 +120,12 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 		"#030405", "#635848", "#563718", "#525250", "#C6B659",
 		"#DCD39E", "#DC5A11"
 	]
-	// Array of eyes colors
+	// Array of lips colors
 	const lipsColors = [
-		"#F198B5", "#D17194", "#EA4E8F", "#E72581"
+		"#B56733", "#D39393", "#F1C9C9", "#E48D8D",
+		"#E49090", "#EB5757", "#CF5258", "#D61A1E",
+		"#A94E50", "#552328", "#E72863", "#AD2687",
+		"#502E67", "#232323", "#BA1821", "#5E1412"
 	]
 	// Array of eyes colors
 	const hairsColor = [
@@ -218,7 +221,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 				?
 				<div className={isMobile ? "toolbar_scroll_mobile" : "toolbar_scroll"}>
 					<div className="editor_sub_menu_container">
-						{Array.from(Array(4).keys()).map((key:number) => (
+						{Array.from(Array(16).keys()).map((key:number) => (
 							<div
 								style={{marginTop: "20px"}}
 								key={key}

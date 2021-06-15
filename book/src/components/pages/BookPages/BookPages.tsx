@@ -129,7 +129,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		}
 	}
 
-	const [local, setLocal] = useState(true)
+	const [local, setLocal] = useState(false)
 
 	return(
 		<div className="book_page">
