@@ -1,5 +1,7 @@
 import React from "react"
 import "./EditorListItem.css"
+import {RootState} from "../../../redux/reducers/rootReducer"
+import {connect} from "react-redux"
 
 interface CustomProps {
 	item: any,
@@ -9,7 +11,7 @@ interface CustomProps {
 	preview?: boolean
 }
 
-export default function EditorListItem({item, chosenItem, menuState,
+function EditorListItem({item, chosenItem, menuState,
 										   handleItemClick, preview}:CustomProps) {
 	const url = "http://localhost:5000/"
 	const image = preview ? `${url}${item.preview}` : `${url}${item.img}`
@@ -34,3 +36,11 @@ export default function EditorListItem({item, chosenItem, menuState,
 		</div>
 	)
 };
+
+const mapStateToProps = (state:RootState) => {
+	return {
+		menuState: state.editorMenu.avatarMenu
+	}
+}
+
+export default connect(mapStateToProps, null)(EditorListItem)

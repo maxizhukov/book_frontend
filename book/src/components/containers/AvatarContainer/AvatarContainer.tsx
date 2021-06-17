@@ -14,8 +14,6 @@ function AvatarContainer({avatars, existingIndex, pagesAvatar}:CustomProps) {
 
 	const index = existingIndex ? existingIndex : avatarIndex
 
-	console.log(avatars[index].hairBack)
-
 	return(
 		<div className="page" id={index.toString()}>
 			<div className="avatar_box">

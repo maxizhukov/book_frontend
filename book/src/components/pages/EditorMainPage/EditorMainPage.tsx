@@ -28,6 +28,7 @@ function EditorMainPage({avatars}:CustomProps) {
 			"face_oval",
 			["editor.menu.faceOval"],
 			"editor.menu.faceOval"))
+		// eslint-disable-next-line
 	}, [])
 
 	const handleBookBtnClick = () => {

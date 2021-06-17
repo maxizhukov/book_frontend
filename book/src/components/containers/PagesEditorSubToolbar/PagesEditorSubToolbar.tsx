@@ -17,20 +17,35 @@ function PagesEditorSubToolbar({menuState}:CustomProps) {
 		dispatch(handlePagesMenu(menuState.chosenCategory, menuState.subCategories, category))
 	}
 
+	const page = window.location.pathname.slice(14, window.location.pathname.length)
+
 	return(
 		<div className="row pages_sub_menu">
-			{menuState.subCategories.map((item:string) => (
+			{page === "0"
+				?
 				<p
-					onClick={() => handleMenuClick(item)}
-					className={menuState.chosenSubCategory === item
+					onClick={() => handleMenuClick("cover")}
+					className={menuState.chosenSubCategory === "cover"
 						? "pages_sub_item selected"
 						: "pages_sub_item"}
-					key={item}
 				>
-					{t(`editor.pages.menu.${item}`)}
+					{t("editor.pages.menu.cover")}
 				</p>
-			))}
-
+				:
+				<>
+					{menuState.subCategories.map((item:string) => (
+						<p
+							onClick={() => handleMenuClick(item)}
+							className={menuState.chosenSubCategory === item
+								? "pages_sub_item selected"
+								: "pages_sub_item"}
+							key={item}
+						>
+							{t(`editor.pages.menu.${item}`)}
+						</p>
+					))}
+				</>
+			}
 		</div>
 	)
 }

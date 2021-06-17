@@ -44,25 +44,22 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 	useEffect(() => {
 		setCurrentPage(window.location.pathname.slice(14, +window.location.pathname.length))
 		setPageData(pages[window.location.pathname.slice(14, +window.location.pathname.length)])
+		// eslint-disable-next-line
 	}, [window.location.pathname])
 
 	useEffect(() => {
 		const jsonStr = getCookie("mycookie")
-		console.log(jsonStr)
 		const arr = JSON.parse(jsonStr)
 		dispatch(changeAvatar(arr))
 		setAvatarsFromCookie(arr)
+		// eslint-disable-next-line
 	}, [])
 
 	// Change font size
 	const changeFontSize = (style:any) => {
 		const changedStyles = {...style}
 		const fontSize = containerWidth / +changedStyles.fontSize
-		const width = containerWidth / +changedStyles.width
-		const height = containerWidth / +changedStyles.height
 		changedStyles.fontSize = `${fontSize}px`
-		changedStyles.width = `${width}px`
-		changedStyles.height = `${height}px`
 		return changedStyles
 	}
 
@@ -71,6 +68,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		if (loadingPage) {
 			setLoadingPage(false)
 		}
+		// eslint-disable-next-line
 	}, [])
 
 	// Take width of page container to set font size
@@ -81,6 +79,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 			const width = pageRef.current ? pageRef.current.offsetWidth : 0
 			setContainerWidth(width)
 		}
+		// eslint-disable-next-line
 	}, [pageRef.current, loadingPage])
 
 	const [pageNumber, setPageNumber] = useState("0")
@@ -132,6 +131,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 
 	const [local, setLocal] = useState(false)
 
+
 	return(
 		<div className="book_page">
 			<div className="avatar_page_window">
@@ -168,7 +168,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 										ref={pageRef}
 										className="pages_container"
 										style={{backgroundImage:
-												`url("${url}${pageData.pageItem.types[0].img}")`
+												`url("${pageData.background}")`
 										}}
 									>
 										<div
@@ -203,7 +203,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 														"text",
 														i.toString())}
 													className="page_element"
-													key={`${currentPage}${text}${i}`}
+													key={`${currentPage}${text}${i}${text.text}`}
 													style={changeFontSize(text.style)}
 													defaultValue={text.text}
 												/>

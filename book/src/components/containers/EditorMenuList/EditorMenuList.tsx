@@ -57,6 +57,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 			default: dispatchByCategory(menuState)
 			}
 		}
+		// eslint-disable-next-line
 	}, [menuState])
 
 	// Set chosen data
@@ -79,6 +80,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		if (menuState.category === "nose") {
 			setChosenItem(avatars[avatarIndex].nose)
 		}
+		// eslint-disable-next-line
 	}, [menuState, avatars])
 
 	// set data to current post
@@ -224,6 +226,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		} else {
 			setCurrentPosts([])
 		}
+		// eslint-disable-next-line
 	},[categories, menuState, avatars])
 
 	// set name of chosen item
@@ -272,7 +275,6 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 				: currentPosts.map((item:any) => (
 					<React.Fragment key={createUniqueId(item.name)}>
 						<EditorListItem
-							menuState={menuState}
 							item={item}
 							chosenItem={`http://localhost:5000/${item.img}` === chosenItem}
 							handleItemClick={handleItemClick}

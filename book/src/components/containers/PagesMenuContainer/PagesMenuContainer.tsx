@@ -29,18 +29,23 @@ function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
 
 	useEffect(() => {
 		if (menu.chosenCategory === "background") {
-			if (menu.chosenSubCategory === "image") {
+			if (menu.chosenSubCategory === "image" || menu.chosenSubCategory == "cover") {
 				const genderOne = avatars[0].avatarGender === "male" ? "m" : "w"
 				const genderTwo = avatars[1].avatarGender === "male" ? "m" : "w"
 				const skinOne = `s${avatars[0].skinName}`
 				const skinTwo = `s${avatars[1].skinName}`
 				const personOne = `${genderOne}${skinOne}`
 				const personTwo = `${genderTwo}${skinTwo}`
-				dispatch(getPages("img", personOne, personTwo))
+				if (menu.chosenSubCategory === "image") {
+					dispatch(getPages("img", personOne, personTwo))
+				} else if (menu.chosenSubCategory === "cover") {
+					dispatch(getPages("cover", personOne, personTwo))
+				}
 			} else {
 				dispatch(getPages("img"))
 			}
 		}
+		// eslint-disable-next-line
 	}, [dispatch])
 
 	// Get data and set to current post
@@ -55,7 +60,7 @@ function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
 					preview: ""
 				}
 				pageObj.img = page.types[0].img
-				pageObj.name = page.types[0].name
+				pageObj.name = page.name
 				pageObj.preview = page.types[0].preview
 				temporaryArray.push(pageObj)
 			})
@@ -65,9 +70,8 @@ function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
 
 	// Set chosen data
 	useEffect(() => {
-		if (menu.chosenSubCategory === "image") {
-			setChosenItem(pages.pages[+currentPage].background)
-		}
+		setChosenItem(pages.pages[+currentPage].background)
+		// eslint-disable-next-line
 	}, [menu, pages])
 
 	// set name of chosen item
@@ -77,15 +81,13 @@ function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
 	const handleItemClick = (name:string, img:string) => {
 		setChosenItem(name)
 		const pagesCopy = [...pages.pages]
-		if (menu.chosenSubCategory === "image") {
-			pagesCopy[+currentPage].background = img
-			pagesCopy[+currentPage].backgroundName = name
-			categories.pages.items.forEach((post:any) => {
-				if (post.name === name) {
-					pagesCopy[+currentPage].pageItem = post
-				}
-			})
-		}
+		pagesCopy[+currentPage].background = img
+		pagesCopy[+currentPage].backgroundName = name
+		categories.pages.items.forEach((post:any) => {
+			if (post.name === name) {
+				pagesCopy[+currentPage].pageItem = post
+			}
+		})
 		dispatch(changePages(pagesCopy))
 		/*const avatarsCopy = [...pages]
 		if (menu.chosenSubCategory === "image") {
