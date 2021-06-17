@@ -14,6 +14,8 @@ function AvatarContainer({avatars, existingIndex, pagesAvatar}:CustomProps) {
 
 	const index = existingIndex ? existingIndex : avatarIndex
 
+	console.log(avatars[index].hairBack)
+
 	return(
 		<div className="page" id={index.toString()}>
 			<div className="avatar_box">
@@ -24,12 +26,14 @@ function AvatarContainer({avatars, existingIndex, pagesAvatar}:CustomProps) {
 							? pagesAvatar.faceOval 
 							: avatars[index].faceOval}")`}}
 					/>
-					<div
+					<img src={avatars[index].hair} className="hair" alt=""/>
+					<img src={avatars[index].hairBack} className="hair_back" alt=""/>
+					{/*<div
 						className="avatar_hair"
 						style={{backgroundImage: `url("${pagesAvatar 
 							? pagesAvatar.hair 
 							: avatars[index].hair}")`}}
-					/>
+					/>*/}
 					<div
 						className="avatar_eyes"
 						style={{backgroundImage: `url("${pagesAvatar 

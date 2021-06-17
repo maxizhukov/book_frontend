@@ -16,7 +16,7 @@ export function getCookie(cName:string) {
 		let cStart = document.cookie.indexOf(cName + "=")
 		if (cStart != -1) {
 			cStart = cStart + cName.length + 1
-			let cEnd = document.cookie.indexOf(";", +cName)
+			let cEnd = document.cookie.indexOf(";"+cName)
 			if (cEnd == -1) {
 				cEnd = document.cookie.length
 			}

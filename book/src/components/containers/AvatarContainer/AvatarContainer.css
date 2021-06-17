@@ -29,6 +29,19 @@
     height: 100%;
     z-index: 1;
 }
+
+.hair {
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+}
+
+.hair_back {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+}
+
 .avatar_hair {
     position: absolute;
     background-size: contain;

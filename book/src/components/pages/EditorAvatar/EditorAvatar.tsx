@@ -24,7 +24,7 @@ function EditorAvatar({menuState, avatars}:CustomProps) {
 
 	const handleSaveClick = () => {
 		let jsonStr = JSON.stringify(avatars)
-		createCookie("mycookie", jsonStr, 10)
+		createCookie("mycookie", jsonStr, 100)
 		history.push("/editor")
 	}
 

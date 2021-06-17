@@ -5,7 +5,7 @@ interface CustomProps {
 	item: any,
 	chosenItem: boolean,
 	menuState?: any,
-	handleItemClick: (name:string, img:string) => void,
+	handleItemClick: (name:string, img:string, secondImage?:string) => void,
 	preview?: boolean
 }
 
@@ -16,7 +16,12 @@ export default function EditorListItem({item, chosenItem, menuState,
 
 	return(
 		<div
-			onClick={() => handleItemClick(item.name, preview ? `${url}${item.img}` : image)}
+			onClick={() =>
+				handleItemClick(
+					item.name,
+					preview ? `${url}${item.img}` : image,
+					menuState.category === "hair" ? `${url}${item.secondImage}` : ""
+				)}
 			className={chosenItem ? "editor_list_item selected" : "editor_list_item"}
 			style={{backgroundImage: `url("${image}")`}}
 		>

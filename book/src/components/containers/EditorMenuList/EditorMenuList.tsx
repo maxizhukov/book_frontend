@@ -112,15 +112,18 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 				categories.hair.items.forEach((hair:any) => {
 					const hairObj:any = {
 						name: "",
-						img: ""
+						img: "",
+						secondImage: ""
 					}
 					hair.types.forEach((item:any) => {
 						if (avatars[avatarIndex].hairColor) {
 							if (avatars[avatarIndex].hairColor === item.name) {
 								hairObj.img = item.img
+								hairObj.secondImage = item.imgBack
 							}
 						} else {
 							hairObj.img = item.img
+							hairObj.secondImage = item.imgBack
 						}
 					})
 					hairObj.name = hair.name
@@ -227,7 +230,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 	const [chosenItem, setChosenItem] = useState("")
 
 	// handle list item click
-	const handleItemClick = (name:string, img:string) => {
+	const handleItemClick = (name:string, img:string, secondImage?: string) => {
 		setChosenItem(name)
 		const avatarsCopy = [...avatars]
 		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
@@ -237,6 +240,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		if ( menuState.category === "hair") {
 			avatarsCopy[avatarIndex].hair = img
 			avatarsCopy[avatarIndex].hairName = name
+			avatarsCopy[avatarIndex].hairBack = secondImage
 		}
 		if ( menuState.category === "eyes") {
 			avatarsCopy[avatarIndex].eyes = img
@@ -261,8 +265,6 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 		return `${name}${Math.random().toString()}`
 	}
 
-	console.log(chosenItem)
-
 	return(
 		<div className="editor_items_list">
 			{categories.loading
@@ -270,6 +272,7 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 				: currentPosts.map((item:any) => (
 					<React.Fragment key={createUniqueId(item.name)}>
 						<EditorListItem
+							menuState={menuState}
 							item={item}
 							chosenItem={`http://localhost:5000/${item.img}` === chosenItem}
 							handleItemClick={handleItemClick}

@@ -9,6 +9,7 @@ const initialState = {
 			faceOval: "http://localhost:5000/uploads/myImage-1622149538423.png",
 			faceName: "1",
 			hair: "http://localhost:5000/uploads/myImage-1622243910513.png",
+			hairBack: "",
 			hairName: "1",
 			hairColor: "7",
 			eyes: "http://localhost:5000/uploads/myImage-1622154980573.png",

@@ -48,6 +48,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 
 	useEffect(() => {
 		const jsonStr = getCookie("mycookie")
+		console.log(jsonStr)
 		const arr = JSON.parse(jsonStr)
 		dispatch(changeAvatar(arr))
 		setAvatarsFromCookie(arr)
