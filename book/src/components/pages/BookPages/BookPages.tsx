@@ -47,14 +47,6 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		// eslint-disable-next-line
 	}, [window.location.pathname])
 
-	useEffect(() => {
-		const jsonStr = getCookie("mycookie")
-		const arr = JSON.parse(jsonStr)
-		dispatch(changeAvatar(arr))
-		setAvatarsFromCookie(arr)
-		// eslint-disable-next-line
-	}, [])
-
 	// Change font size
 	const changeFontSize = (style:any) => {
 		const changedStyles = {...style}
@@ -125,7 +117,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		if (person === 0) {
 			return `${url}${pageData.pageItem.style.personOne.body.person.firstPerson}`
 		} else {
-			return `${url}${pageData.pageItem.style.personOne.body.person.secondPerson}`
+			return `${url}${pageData.pageItem.style.personTwo.body.person.secondPerson}`
 		}
 	}
 

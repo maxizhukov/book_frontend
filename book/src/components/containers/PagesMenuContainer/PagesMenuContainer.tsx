@@ -5,15 +5,18 @@ import {connect, useDispatch} from "react-redux"
 import {getPages} from "../../../redux/actions/categoriesActions"
 import EditorListItem from "../EditorListItem/EditorListItem"
 import {changePages} from "../../../redux/actions/pagesActions"
+import {getCookie} from "../../../utils/cookie"
+import {changeAvatar} from "../../../redux/actions/avatarsActions"
 
 interface CustomProps {
 	menu?: any,
 	categories?: any,
 	pages?: any,
-	avatars?: any
+	avatars?: any,
+	avatarsLoading?: boolean
 }
 
-function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
+function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:CustomProps) {
 	const dispatch = useDispatch()
 
 	// Define current posts
@@ -27,8 +30,19 @@ function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
 		setCurrentPage(window.location.pathname.slice(14, window.location.pathname.length))
 	}, [])
 
+	// Detect if cookie is parsed
+	const [cookieParsed, setCookieParsed] = useState(false)
+
 	useEffect(() => {
-		if (menu.chosenCategory === "background") {
+		const jsonStr = getCookie("mycookie")
+		const arr = JSON.parse(jsonStr)
+		dispatch(changeAvatar(arr))
+		setCookieParsed(true)
+		// eslint-disable-next-line
+	}, [])
+
+	useEffect(() => {
+		if (menu.chosenCategory === "background" && cookieParsed && !avatarsLoading) {
 			if (menu.chosenSubCategory === "image" || menu.chosenSubCategory == "cover") {
 				const genderOne = avatars[0].avatarGender === "male" ? "m" : "w"
 				const genderTwo = avatars[1].avatarGender === "male" ? "m" : "w"
@@ -46,7 +60,7 @@ function PagesMenuContainer({menu, categories, pages, avatars}:CustomProps) {
 			}
 		}
 		// eslint-disable-next-line
-	}, [dispatch])
+	}, [dispatch, cookieParsed, avatarsLoading])
 
 	// Get data and set to current post
 	useEffect(() => {
@@ -150,7 +164,8 @@ const mapStateToProps = (state:RootState) => {
 		menu: state.editorMenu.pagesMenu,
 		categories: state.categories,
 		pages: state.pages,
-		avatars: state.avatars.avatars
+		avatars: state.avatars.avatars,
+		avatarsLoading: state.avatars.loading
 	}
 }
 

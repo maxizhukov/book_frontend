@@ -7,6 +7,7 @@ export const GET_NOSES = "GET_NOSES"
 export const GET_PAGES = "GET_PAGES"
 export const CATEGORIES_ERROR = "CATEGORIES_ERROR"
 
+
 interface getFacesOvalType {
 	type: typeof GET_FACES_OVAL
 	payload: any

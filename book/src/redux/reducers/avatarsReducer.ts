@@ -1,6 +1,7 @@
 import {avatarsTypes, CHANGE_AVATAR} from "../types/avatarsTypes"
 
 const initialState = {
+	loading: true,
 	avatars: [
 		{
 			avatarName: "",
@@ -55,7 +56,8 @@ export const avatarsReducer = (
 	case CHANGE_AVATAR:
 		return{
 			...state,
-			avatars: action.payload
+			avatars: action.payload,
+			loading: false
 		}
 	default: return state
 	}
