@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react"
 import "./BookPages.css"
 import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
 import {useTranslation} from "react-i18next"
-import {useParams} from "react-router"
+import {useLocation, useParams} from "react-router"
 import {useHistory} from "react-router-dom"
 import {getCookie} from "../../../utils/cookie"
 import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
@@ -27,6 +27,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const id:any = useParams()
+	const location = useLocation()
 
 	const url = "http://localhost:5000/"
 
@@ -45,7 +46,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		setCurrentPage(window.location.pathname.slice(14, +window.location.pathname.length))
 		setPageData(pages[window.location.pathname.slice(14, +window.location.pathname.length)])
 		// eslint-disable-next-line
-	}, [window.location.pathname])
+	}, [location])
 
 	// Change font size
 	const changeFontSize = (style:any) => {
@@ -57,11 +58,12 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 
 	// Show loading till page will not rendered
 	useEffect(() => {
-		if (loadingPage) {
+		if (loadingPage && pageData.background) {
 			setLoadingPage(false)
 		}
 		// eslint-disable-next-line
-	}, [])
+	}, [pageData.background])
+
 
 	// Take width of page container to set font size
 	const [containerWidth, setContainerWidth] = useState(0)
@@ -108,11 +110,6 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		dispatch(changePages(pagesCopy))
 	}
 
-	// Handle menu click
-	const handleMenuClick = (menuItem:string) => {
-		dispatch(handlePagesMenu(menuItem, [], ""))
-	}
-
 	const getImageUrl = (person:number) => {
 		if (person === 0) {
 			return `${url}${pageData.pageItem.style.personOne.body.person.firstPerson}`
@@ -122,7 +119,6 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 	}
 
 	const [local, setLocal] = useState(false)
-
 
 	return(
 		<div className="book_page">
@@ -163,30 +159,38 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 												`url("${pageData.background}")`
 										}}
 									>
-										<div
-											style={pageData.pageItem.style.personOne.body.style}
-										>
-											<img src={getImageUrl(0)} style={{width: "100%"}} alt="personOne"/>
-										</div>
-										<div
-											style={pageData.pageItem.style.personTwo.body.style}
-										>
-											<img src={getImageUrl(1)} style={{width: "100%"}} alt="personTwo"/>
-										</div>
-										<div
-											style={pageData.pageItem.style.personOne.style}
-										>
-											<AvatarContainer
-												pagesAvatar={avatars[0]}
-											/>
-										</div>
-										<div
-											style={pageData.pageItem.style.personTwo.style}
-										>
-											<AvatarContainer
-												pagesAvatar={avatars[1]}
-											/>
-										</div>
+										{pageData.pageItem.type === "text"
+											? null
+											:
+											<>
+												<div
+													style={pageData.pageItem.style.personOne.body.style}
+												>
+													<img src={getImageUrl(0)} style={{width: "100%"}} alt="personOne"/>
+												</div>
+												<div
+													style={pageData.pageItem.style.personTwo.body.style}
+												>
+													<img src={getImageUrl(1)} style={{width: "100%"}} alt="personTwo"/>
+												</div>
+												<div
+													style={pageData.pageItem.style.personOne.style}
+												>
+													<AvatarContainer
+														pagesAvatar={avatars[0]}
+														existingIndex={0}
+													/>
+												</div>
+												<div
+													style={pageData.pageItem.style.personTwo.style}
+												>
+													<AvatarContainer
+														pagesAvatar={avatars[1]}
+														existingIndex={1}
+													/>
+												</div>
+											</>
+										}
 										{
 											pageData.pageItem.style.texts.map((text:any, i:number) => (
 												<textarea
@@ -195,7 +199,7 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 														"text",
 														i.toString())}
 													className="page_element"
-													key={`${currentPage}${text}${i}${text.text}`}
+													key={`${currentPage}${i}${pageData.pageItem._id}`}
 													style={changeFontSize(text.style)}
 													defaultValue={text.text}
 												/>

@@ -1,9 +1,10 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import "./PagesEditorSubToolbar.css"
 import {useTranslation} from "react-i18next"
 import {connect, useDispatch} from "react-redux"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {handlePagesMenu} from "../../../redux/actions/editorMenuActions"
+import {useLocation} from "react-router"
 
 interface CustomProps {
 	menuState?: any
@@ -12,12 +13,18 @@ interface CustomProps {
 function PagesEditorSubToolbar({menuState}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
+	const location = useLocation()
 
 	const handleMenuClick = (category:any) => {
 		dispatch(handlePagesMenu(menuState.chosenCategory, menuState.subCategories, category))
 	}
 
-	const page = window.location.pathname.slice(14, window.location.pathname.length)
+	const [page, setPage] = useState("0")
+
+	useEffect(() => {
+		setPage(location.pathname.slice(14, window.location.pathname.length))
+	}, [location])
+
 
 	return(
 		<div className="row pages_sub_menu">

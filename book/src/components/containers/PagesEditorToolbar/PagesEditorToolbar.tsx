@@ -1,10 +1,11 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import "./PagesEditorToolbar.css"
 import {isMobile} from "react-device-detect"
 import {useTranslation} from "react-i18next"
 import {connect, useDispatch} from "react-redux"
 import {handlePagesMenu} from "../../../redux/actions/editorMenuActions"
 import {RootState} from "../../../redux/reducers/rootReducer"
+import {useLocation} from "react-router"
 
 interface CustomProps {
 	menuState?: any
@@ -13,14 +14,30 @@ interface CustomProps {
 function PagesEditorToolbar({menuState}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
+	const location = useLocation()
+
+	const [currentPage, setCurrentPage] = useState("0")
+
+	useEffect(() => {
+		setCurrentPage(location.pathname.slice(14, window.location.pathname.length))
+	}, [location])
+
+	useEffect(() => {
+		handleItemClick("background")
+	}, [currentPage])
 
 	const handleItemClick = (category:string) => {
 		let subCategories:any = []
 		let chosenSubCategory = ""
 		switch (category) {
 		case "background":
-			subCategories = ["image", "text"]
-			chosenSubCategory = "image"
+			if (currentPage === "0") {
+				subCategories = ["cover"]
+				chosenSubCategory = "cover"
+			} else {
+				subCategories = ["image", "text"]
+				chosenSubCategory = "image"
+			}
 			break
 		default: 
 			subCategories = []
@@ -38,27 +55,6 @@ function PagesEditorToolbar({menuState}:CustomProps) {
 						? "sub_menu_item selected"
 						: "sub_menu_item"}>
 					{t("editor.pages.menu.background")}
-				</p>
-				<p
-					onClick={() => handleItemClick("actions")}
-					className={menuState.chosenCategory === "actions"
-						? "sub_menu_item selected"
-						: "sub_menu_item"}>
-					{t("editor.pages.menu.actions")}
-				</p>
-				<p
-					onClick={() => handleItemClick("text")}
-					className={menuState.chosenCategory === "text"
-						? "sub_menu_item selected"
-						: "sub_menu_item"}>
-					{t("editor.pages.menu.text")}
-				</p>
-				<p
-					onClick={() => handleItemClick("elements")}
-					className={menuState.chosenCategory === "elements"
-						? "sub_menu_item selected"
-						: "sub_menu_item"}>
-					{t("editor.pages.menu.elements")}
 				</p>
 			</div>
 		</div>

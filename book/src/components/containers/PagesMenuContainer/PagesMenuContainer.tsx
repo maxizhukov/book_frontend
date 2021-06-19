@@ -7,6 +7,7 @@ import EditorListItem from "../EditorListItem/EditorListItem"
 import {changePages} from "../../../redux/actions/pagesActions"
 import {getCookie} from "../../../utils/cookie"
 import {changeAvatar} from "../../../redux/actions/avatarsActions"
+import {useLocation} from "react-router"
 
 interface CustomProps {
 	menu?: any,
@@ -18,6 +19,9 @@ interface CustomProps {
 
 function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:CustomProps) {
 	const dispatch = useDispatch()
+	const location = useLocation()
+
+	const url = "http://localhost:5000/"
 
 	// Define current posts
 	const [currentPosts, setCurrentPosts] = useState([])
@@ -28,7 +32,7 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 	// Take page from url and save to state
 	useEffect(() => {
 		setCurrentPage(window.location.pathname.slice(14, window.location.pathname.length))
-	}, [])
+	}, [location])
 
 	// Detect if cookie is parsed
 	const [cookieParsed, setCookieParsed] = useState(false)
@@ -43,7 +47,11 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 
 	useEffect(() => {
 		if (menu.chosenCategory === "background" && cookieParsed && !avatarsLoading) {
-			if (menu.chosenSubCategory === "image" || menu.chosenSubCategory == "cover") {
+			if (
+				menu.chosenSubCategory === "image"
+				|| menu.chosenSubCategory === "cover"
+				|| menu.chosenSubCategory === "text"
+			) {
 				const genderOne = avatars[0].avatarGender === "male" ? "m" : "w"
 				const genderTwo = avatars[1].avatarGender === "male" ? "m" : "w"
 				const skinOne = `s${avatars[0].skinName}`
@@ -54,13 +62,32 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 					dispatch(getPages("img", personOne, personTwo))
 				} else if (menu.chosenSubCategory === "cover") {
 					dispatch(getPages("cover", personOne, personTwo))
+				} else if (menu.chosenSubCategory === "text") {
+					dispatch(getPages("text", personOne, personTwo))
 				}
 			} else {
 				dispatch(getPages("img"))
 			}
 		}
 		// eslint-disable-next-line
-	}, [dispatch, cookieParsed, avatarsLoading])
+	}, [dispatch, cookieParsed, avatarsLoading, menu])
+
+	useEffect(() => {
+		if (categories.pages.items
+			&& categories.pages.items.length
+			&& !pages.pages[currentPage].background) {
+			setChosenItem(categories.pages.items[0].name)
+			const pagesCopy = [...pages.pages]
+			pagesCopy[+currentPage].background = `${url}${categories.pages.items[0].types[0].img}`
+			pagesCopy[+currentPage].backgroundName = categories.pages.items[0].name
+			categories.pages.items.forEach((post:any) => {
+				if (post.name === categories.pages.items[0].name) {
+					pagesCopy[+currentPage].pageItem = post
+				}
+			})
+			dispatch(changePages(pagesCopy))
+		}
+	}, [categories.pages])
 
 	// Get data and set to current post
 	useEffect(() => {

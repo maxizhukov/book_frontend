@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import "./AvatarContainer.css"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {connect} from "react-redux"
@@ -12,7 +12,7 @@ interface CustomProps {
 function AvatarContainer({avatars, existingIndex, pagesAvatar}:CustomProps) {
 	const avatarIndex:number = +window.location.search.slice(1,2)
 
-	const index = existingIndex ? existingIndex : avatarIndex
+	let index = existingIndex ? existingIndex : avatarIndex
 
 	return(
 		<div className="page" id={index.toString()}>
@@ -24,14 +24,14 @@ function AvatarContainer({avatars, existingIndex, pagesAvatar}:CustomProps) {
 							? pagesAvatar.faceOval 
 							: avatars[index].faceOval}")`}}
 					/>
-					<img src={avatars[index].hair} className="hair" alt=""/>
-					<img src={avatars[index].hairBack} className="hair_back" alt=""/>
-					{/*<div
-						className="avatar_hair"
-						style={{backgroundImage: `url("${pagesAvatar 
-							? pagesAvatar.hair 
-							: avatars[index].hair}")`}}
-					/>*/}
+					{avatars[index].hair
+						? <img src={avatars[index].hair} className="hair" alt=""/>
+						: null
+					}
+					{avatars[index].hairBack
+						? <img src={avatars[index].hairBack} className="hair_back" alt=""/>
+						: null
+					}
 					<div
 						className="avatar_eyes"
 						style={{backgroundImage: `url("${pagesAvatar 
