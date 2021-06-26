@@ -1,28 +1,36 @@
 import React, {useEffect, useRef, useState} from "react"
-import "./BookPages.css"
-import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
 import {useTranslation} from "react-i18next"
 import {useLocation, useParams} from "react-router"
 import {useHistory} from "react-router-dom"
-import {getCookie} from "../../../utils/cookie"
-import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
+import * as htmlToImage from "html-to-image"
 import {connect, useDispatch} from "react-redux"
-import {handleChosenItem, handlePagesMenu} from "../../../redux/actions/editorMenuActions"
+import {handleChosenItem} from "../../../redux/actions/editorMenuActions"
 import {RootState} from "../../../redux/reducers/rootReducer"
-import {changeAvatar} from "../../../redux/actions/avatarsActions"
+import {changePages, changePagesImages, showPagesImagesLoading} from "../../../redux/actions/pagesActions"
+import {changeCartItems} from "../../../redux/actions/cartActions"
+
+import "./BookPages.css"
+
+import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
+import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
 import PagesEditorToolbar from "../../containers/PagesEditorToolbar/PagesEditorToolbar"
 import PagesMenuContainer from "../../containers/PagesMenuContainer/PagesMenuContainer"
 import PagesEditorSubToolbar from "../../containers/PagesEditorSubToolbar/PagesEditorSubToolbar"
-import {changePages} from "../../../redux/actions/pagesActions"
 import LocalPage from "../../containers/LocalPage/LocalPage"
+
+import {ICartItem} from "../../../utils/interface"
 
 interface CustomProps {
 	chosenItem?: any,
 	pages?: any,
-	avatars?: any
+	avatars?: any,
+	pagesImages?: any,
+	pagesImagesLoading?: boolean,
+	cartItems?: any
 }
 
-function BookPages({chosenItem, pages, avatars}:CustomProps) {
+function BookPages(
+	{chosenItem, pages, avatars, pagesImages, pagesImagesLoading, cartItems}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const history = useHistory()
@@ -31,6 +39,38 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 
 	const url = "http://localhost:5000/"
 
+	/*NEED FOR TRANSFORM FOR FORM DATA POST*/
+	/*const DataURIToBlob = (dataURI: string) => {
+		const splitDataURI = dataURI.split(",")
+		const byteString = splitDataURI[0].indexOf("base64") >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
+		const mimeString = splitDataURI[0].split(":")[1].split(";")[0]
+
+		const ia = new Uint8Array(byteString.length)
+		for (let i = 0; i < byteString.length; i++)
+			ia[i] = byteString.charCodeAt(i)
+
+		return new Blob([ia], { type: mimeString })
+	}
+*/
+	/*const update = async (data:any) => {
+		const file = DataURIToBlob(data)
+		let bodyFormData = new FormData()
+		bodyFormData.append("myImage", file)
+		bodyFormData.append("name", "preview")
+		const config = {
+			headers: { "Content-Type": "multipart/form-data" }
+		}
+		try {
+			const response = await axios.put(
+				"http://localhost:5000/api/pages/60ce38a84de18f101bf2d8b0",
+				bodyFormData,
+				config)
+			console.log(response)
+		} catch (e) {
+			console.log(e)
+		}
+	}
+*/
 	const [avatarsFromCookie, setAvatarsFromCookie] = useState([])
 
 	const [loadingPage, setLoadingPage] = useState(true)
@@ -82,19 +122,67 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 		setPageNumber(id.number)
 	}, [id])
 
-
 	// Handle pages click
-	const previousPage = () => {
+	const previousPage = async () => {
+		let domElement = document.getElementById("my-node")
+		dispatch(showPagesImagesLoading())
+		let img = ""
 		if (+pageNumber > 0) {
+			const objCopy = {...pagesImages}
+			if (domElement) {
+				await htmlToImage.toPng(domElement)
+					.then(function (dataUrl) {
+						if (dataUrl) {
+							img = dataUrl
+						}
+					})
+					.catch(function (error) {
+						console.error("oops, something went wrong!", error)
+						return "error"
+					})
+			}
+			objCopy[pageNumber] = img
+			dispatch(changePagesImages(objCopy))
 			const prevPage = +pageNumber - 1
 			history.push(`/editor/pages/${prevPage}`)
 		}
 	}
 
-	const nextPage = () => {
+	const nextPage = async () => {
+		let domElement = document.getElementById("my-node")
+		dispatch(showPagesImagesLoading())
+		let img = ""
+		if (domElement) {
+			await htmlToImage.toPng(domElement)
+				.then(function (dataUrl) {
+					if (dataUrl) {
+						img = dataUrl
+					}
+				})
+				.catch(function (error) {
+					console.error("oops, something went wrong!", error)
+					return "error"
+				})
+		}
+		const objCopy = {...pagesImages}
+		objCopy[pageNumber] = img
+		dispatch(changePagesImages(objCopy))
 		if (+pageNumber < 20) {
 			const nexPage = +pageNumber + 1
 			history.push(`/editor/pages/${nexPage}`)
+		} else if (pageNumber === "20") {
+			const newCartItem:ICartItem = {
+				itemType: "book",
+				previewImage: pagesImages[0],
+				name: t("cartItems.book.name", {
+					personOne: avatars[0].avatarName,
+					personTwo: avatars[1].avatarName}),
+				description: t("cartItems.book.description"),
+				price: 39.99
+			}
+			const newCartItemsArray = [...cartItems, newCartItem]
+			dispatch(changeCartItems(newCartItemsArray))
+			history.push("/checkout")
 		}
 	}
 
@@ -139,7 +227,9 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 					<RoundedButton
 						handleClick={nextPage}
 						customStyle="primary"
-						text={t("editor.pages.next_btn")}
+						text={pageNumber === "20"
+							? t("editor.pages.save_btn")
+							: t("editor.pages.next_btn")}
 					/>
 				</div>
 				<div className="center" style={{width: "100%", height: "calc(100% - 50px)"}}>
@@ -151,60 +241,69 @@ function BookPages({chosenItem, pages, avatars}:CustomProps) {
 								?
 								<LocalPage />
 								:
-								<div className="avatar_box">
-									<div
-										ref={pageRef}
-										className="pages_container"
-										style={{backgroundImage:
-												`url("${pageData.background}")`
-										}}
-									>
-										{pageData.pageItem.type === "text"
-											? null
-											:
-											<>
-												<div
-													style={pageData.pageItem.style.personOne.body.style}
-												>
-													<img src={getImageUrl(0)} style={{width: "100%"}} alt="personOne"/>
-												</div>
-												<div
-													style={pageData.pageItem.style.personTwo.body.style}
-												>
-													<img src={getImageUrl(1)} style={{width: "100%"}} alt="personTwo"/>
-												</div>
-												<div
-													style={pageData.pageItem.style.personOne.style}
-												>
-													<AvatarContainer
-														pagesAvatar={avatars[0]}
-														existingIndex={0}
+								<div>
+									{pagesImagesLoading
+										? <p className="book_saving">Saving</p> : null}
+									<div className="avatar_box">
+										<div
+											id="my-node"
+											ref={pageRef}
+											className="pages_container"
+											style={{backgroundImage:
+													`url("${pageData.background}")`
+											}}
+										>
+											{pageData.pageItem.type === "text"
+												? null
+												:
+												<>
+													<div
+														style={pageData.pageItem.style.personOne.body.style}
+													>
+														<img
+															src={getImageUrl(0)}
+															style={{width: "100%"}} alt="personOne"/>
+													</div>
+													<div
+														style={pageData.pageItem.style.personTwo.body.style}
+													>
+														<img
+															src={getImageUrl(1)}
+															style={{width: "100%"}} alt="personTwo"/>
+													</div>
+													<div
+														style={pageData.pageItem.style.personOne.style}
+													>
+														<AvatarContainer
+															pagesAvatar={avatars[0]}
+															existingIndex={0}
+														/>
+													</div>
+													<div
+														style={pageData.pageItem.style.personTwo.style}
+													>
+														<AvatarContainer
+															pagesAvatar={avatars[1]}
+															existingIndex={1}
+														/>
+													</div>
+												</>
+											}
+											{
+												pageData.pageItem.style.texts.map((text:any, i:number) => (
+													<textarea
+														onChange={(value:any) => handleTextChange(value, i)}
+														onClick={() => handleItemFocus(
+															"text",
+															i.toString())}
+														className="page_element"
+														key={`${currentPage}${i}${pageData.pageItem._id}`}
+														style={changeFontSize(text.style)}
+														defaultValue={text.text}
 													/>
-												</div>
-												<div
-													style={pageData.pageItem.style.personTwo.style}
-												>
-													<AvatarContainer
-														pagesAvatar={avatars[1]}
-														existingIndex={1}
-													/>
-												</div>
-											</>
-										}
-										{
-											pageData.pageItem.style.texts.map((text:any, i:number) => (
-												<textarea
-													onChange={(value:any) => handleTextChange(value, i)}
-													onClick={() => handleItemFocus(
-														"text",
-														i.toString())}
-													className="page_element"
-													key={`${currentPage}${i}${pageData.pageItem._id}`}
-													style={changeFontSize(text.style)}
-													defaultValue={text.text}
-												/>
-											))
-										}
+												))
+											}
+										</div>
 									</div>
 								</div>
 							}
@@ -225,7 +324,10 @@ const mapStateToProps = (state:RootState) => {
 	return {
 		chosenItem: state.editorMenu.chosenItem,
 		pages: state.pages.pages,
-		avatars: state.avatars.avatars
+		avatars: state.avatars.avatars,
+		pagesImages: state.pages.pagesImages,
+		pagesImagesLoading: state.pages.pagesImagesLoading,
+		cartItems: state.cart.items
 	}
 }
 

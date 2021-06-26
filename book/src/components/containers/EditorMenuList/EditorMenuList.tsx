@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import "./EditorMenuList.css"
 import EditorListItem from "../EditorListItem/EditorListItem"
 import {RootState} from "../../../redux/reducers/rootReducer"
@@ -266,6 +266,16 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 
 	const createUniqueId = (name:any) => {
 		return `${name}${Math.random().toString()}`
+	}
+
+	// Show loading, till items are not loaded
+	const [loading, setLoading] = useState(true)
+	const counter = useRef(0)
+	const imageLoaded = () => {
+		counter.current += 1
+		if (counter.current >= currentPosts.length) {
+			setLoading(false)
+		}
 	}
 
 	return(

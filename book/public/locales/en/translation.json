@@ -19,6 +19,7 @@
     "pages": {
       "back_btn": "Back",
       "next_btn": "Next",
+      "save_btn": "Save",
       "page": "Page",
       "cover": "Book cover",
       "menu": {
@@ -31,6 +32,20 @@
         "outdoor": "Outdoor",
         "cover": "Cover page"
       }
+    }
+  },
+  "checkout": {
+    "title": "Items in your bag",
+    "summary": {
+      "title": "Order Summary",
+      "total": "Total",
+      "checkout_btn": "Checkout"
+    }
+  },
+  "cartItems": {
+    "book": {
+      "name": " Love story book of {{personOne}} and {{personTwo}}",
+      "description": "Book that will start new page in your relationship"
     }
   },
   "warnings": {

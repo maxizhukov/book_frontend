@@ -1,22 +1,23 @@
-import React from "react"
-import { useTranslation } from "react-i18next"
-import "./App.css"
+import React, {lazy} from "react"
 import { ToastContainer } from "react-toastify"
 import {
 	Router,
 	Switch,
 	Route
 } from "react-router-dom"
-import HomeView from "./views/HomeView/HomeView"
-import EditorView from "./views/EditorView/EditorView"
-import NotFoundPage from "./views/NotFoundView/NotFoundView"
 import { createBrowserHistory } from "history"
+
+import "./App.css"
 import "react-toastify/dist/ReactToastify.css"
+
+const HomeView = lazy(() => import("./views/HomeView/HomeView"))
+const EditorView = lazy(() => import("./views/EditorView/EditorView"))
+const NotFoundPage = lazy(() => import("./views/NotFoundView/NotFoundView"))
+const CheckoutView = lazy(() => import("./views/CheckoutView/CheckoutView"))
 
 export const customHistory = createBrowserHistory()
 
 function App() {
-	const { t } = useTranslation()
 	return (
 		<div>
 			<Router history={customHistory}>
@@ -26,6 +27,9 @@ function App() {
 					</Route>
 					<Route path="/editor">
 						<EditorView />
+					</Route>
+					<Route path="/checkout">
+						<CheckoutView />
 					</Route>
 					<Route>
 						<NotFoundPage />

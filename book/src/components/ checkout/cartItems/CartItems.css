@@ -1,0 +1,26 @@
+.cart_item {
+    box-sizing: border-box;
+    width: 70%;
+    height: 150px;
+    border: 1px solid #30a6d9;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.cart_item_image {
+    height: 90%;
+    margin-right: 15px;
+}
+
+.cart_item_text {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 1000px) {
+    .cart_item {
+        width: 100%;
+    }
+}
