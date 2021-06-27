@@ -40,6 +40,14 @@
       "title": "Order Summary",
       "total": "Total",
       "checkout_btn": "Checkout"
+    },
+    "item": {
+      "preview": "Preview",
+      "edit": "Edit",
+      "remove": "Remove"
+    },
+    "book_modal": {
+      "title": "Preview of {{personOne}} and {{personTwo}} Love story book"
     }
   },
   "cartItems": {

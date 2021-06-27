@@ -1,0 +1,65 @@
+.modal_container_big {
+    min-width: 90vw;
+    max-width: 95vw;
+    max-height: 95vh;
+    background-color: #F2F2F4;
+    position: relative;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.modal_bg {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #F2F2F4;
+    padding: 20px;
+}
+
+.close_btn {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.control-arrow {
+    width: 30%;
+    background-color: #30a6d9;
+}
+
+.modal_bg > h2 {
+    font-size: 18px;
+    margin-top: 25px;
+}
+
+.carousel_container {
+    width: 100%;
+    max-width: 100%!important;
+    box-sizing: border-box;
+}
+
+.carousel_image_container {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel_image {
+    width: 40%!important;
+}
+
+@media (max-width: 1000px) {
+    .close_btn {
+        width: 15px;
+        height: 15px;
+    }
+    .modal_bg > h2 {
+        font-size: 14px;
+    }
+}
