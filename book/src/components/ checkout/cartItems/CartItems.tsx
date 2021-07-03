@@ -10,10 +10,11 @@ import "./CartItems.css"
 import {ICartItem} from "../../../utils/interface"
 interface CustomProps {
 	cartItems?: any,
-	avatars?: any
+	avatars?: any,
+	openPreviewModal: any
 }
 
-function CartItem({cartItems, avatars}:CustomProps) {
+function CartItem({cartItems, avatars, openPreviewModal}:CustomProps) {
 	const { t } = useTranslation()
 
 	return(
@@ -33,7 +34,9 @@ function CartItem({cartItems, avatars}:CustomProps) {
 							<p><strong>{rewriteCurrency(item.price, "USD")}</strong></p>
 						</div>
 						<div className="cart_item_links_row">
-							<p>{t("checkout.item.preview")}</p>
+							<p onClick={openPreviewModal}>
+								{t("checkout.item.preview")}
+							</p>
 							<p>{t("checkout.item.edit")}</p>
 							<p>{t("checkout.item.remove")}</p>
 						</div>

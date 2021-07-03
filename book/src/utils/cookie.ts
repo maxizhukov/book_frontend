@@ -8,7 +8,6 @@ export function createCookie(name:string, value:any, days:number) {
 	else {
 		expires = ""
 	}
-	console.log("NOW: ",  name + "=" + value + expires + "; path=/")
 	document.cookie = name + "=" + value + expires + "; path=/"
 }
 

@@ -45,7 +45,7 @@ export default function CheckoutView() {
 			</Modal>
 			<h1>{t("checkout.title")}</h1>
 			<div className="checkout_container">
-				<CartItem />
+				<CartItem openPreviewModal={setShowModal(true)} />
 				<TotalComponent />
 			</div>
 		</div>

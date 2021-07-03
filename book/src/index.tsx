@@ -1,6 +1,6 @@
 import React, {Suspense} from "react"
 import ReactDOM from "react-dom"
-import Store from "./redux/store"
+import { Store } from "./redux/store"
 import {Provider} from "react-redux"
 import App from "./App"
 import "./i18next"

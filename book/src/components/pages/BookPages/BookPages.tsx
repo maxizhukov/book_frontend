@@ -8,6 +8,7 @@ import {handleChosenItem} from "../../../redux/actions/editorMenuActions"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {changePages, changePagesImages, showPagesImagesLoading} from "../../../redux/actions/pagesActions"
 import {changeCartItems} from "../../../redux/actions/cartActions"
+import { useScreenshot } from "use-react-screenshot"
 
 import "./BookPages.css"
 
@@ -19,6 +20,8 @@ import PagesEditorSubToolbar from "../../containers/PagesEditorSubToolbar/PagesE
 import LocalPage from "../../containers/LocalPage/LocalPage"
 
 import {ICartItem} from "../../../utils/interface"
+import {postNewBook, updateBook} from "../../../redux/actions/serverBooksActions"
+import {getBookLocalId, getUserLocalId} from "../../../utils/localId"
 
 interface CustomProps {
 	chosenItem?: any,
@@ -36,8 +39,24 @@ function BookPages(
 	const history = useHistory()
 	const id:any = useParams()
 	const location = useLocation()
+	const [image, takeScreenshot] = useScreenshot()
 
 	const url = "http://localhost:5000/"
+
+	useEffect(() => {
+		if (!getBookLocalId()) {
+			const userId = getUserLocalId()
+			if (userId) {
+				dispatch(postNewBook(userId, {
+					0: ""
+				}))
+			} else {
+				console.log("Something with userId")
+			}
+		} else {
+
+		}
+	}, [])
 
 	/*NEED FOR TRANSFORM FOR FORM DATA POST*/
 	/*const DataURIToBlob = (dataURI: string) => {
@@ -108,6 +127,7 @@ function BookPages(
 	// Take width of page container to set font size
 	const [containerWidth, setContainerWidth] = useState(0)
 	const pageRef:any = useRef(null)
+
 	useEffect(() => {
 		if (!loadingPage) {
 			const width = pageRef.current ? pageRef.current.offsetWidth : 0
@@ -165,6 +185,7 @@ function BookPages(
 				})
 		}
 		const objCopy = {...pagesImages}
+		dispatch(updateBook(pageNumber, img))
 		objCopy[pageNumber] = img
 		dispatch(changePagesImages(objCopy))
 		if (+pageNumber < 20) {
@@ -246,8 +267,8 @@ function BookPages(
 										? <p className="book_saving">Saving</p> : null}
 									<div className="avatar_box">
 										<div
-											id="my-node"
 											ref={pageRef}
+											id="my-node"
 											className="pages_container"
 											style={{backgroundImage:
 													`url("${pageData.background}")`
