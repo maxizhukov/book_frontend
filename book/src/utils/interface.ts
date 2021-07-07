@@ -1,7 +1,8 @@
 export interface ICartItem {
 	itemType: string,
-	previewImage: string,
+	previewImage?: string,
 	name: string,
 	description: string,
-	price: number
+	price: number,
+	id: string
 }

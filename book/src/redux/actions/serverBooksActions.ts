@@ -4,7 +4,10 @@ import axios from "axios"
 import {customHistory} from "../../App"
 import {
 	BOOK_MESSAGES,
-	serverBooksTypes
+	GET_BOOK,
+	serverBooksTypes,
+	SHOW_BOOKS_LOADING,
+	UPDATE_BOOK_SUCCESS
 } from "../types/serverBookTypes"
 import {getBookLocalId, setBookLocalId} from "../../utils/localId"
 
@@ -57,7 +60,11 @@ export const updateBook = (page: string, image: any) =>
 		const fullUrl = `${url}books/${id}`
 		try {
 			const response = await axios.put(fullUrl, formData, options)
-			console.log(response)
+			if (response) {
+				dispatch({
+					type: UPDATE_BOOK_SUCCESS
+				})
+			}
 		} catch (e) {
 			if (e.request.status === 404) {
 				customHistory.push("/error")
@@ -68,3 +75,33 @@ export const updateBook = (page: string, image: any) =>
 			}
 		}
 	}
+
+// Get book
+export const getBook = (id: string) =>
+	async (dispatch: Dispatch<serverBooksTypes>) => {
+		const fullUrl = `${url}books/${id}`
+		console.log(fullUrl)
+		try {
+			const response = await axios.get(fullUrl)
+			if (response) {
+				dispatch({
+					type: GET_BOOK,
+					payload: response.data
+				})
+			}
+		} catch (e) {
+			if (e.request.status === 404) {
+				customHistory.push("/error")
+			} else if (e.request.status === 500) {
+				customHistory.push("/server-error")
+			} else {
+				console.log(e)
+			}
+		}
+	}
+	
+export const showBooksPagesLoading = () => {
+	return {
+		type: SHOW_BOOKS_LOADING
+	}
+}

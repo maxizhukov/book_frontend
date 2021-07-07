@@ -6,7 +6,7 @@ import * as htmlToImage from "html-to-image"
 import {connect, useDispatch} from "react-redux"
 import {handleChosenItem} from "../../../redux/actions/editorMenuActions"
 import {RootState} from "../../../redux/reducers/rootReducer"
-import {changePages, changePagesImages, showPagesImagesLoading} from "../../../redux/actions/pagesActions"
+import {changePages} from "../../../redux/actions/pagesActions"
 import {changeCartItems} from "../../../redux/actions/cartActions"
 import { useScreenshot } from "use-react-screenshot"
 
@@ -20,7 +20,7 @@ import PagesEditorSubToolbar from "../../containers/PagesEditorSubToolbar/PagesE
 import LocalPage from "../../containers/LocalPage/LocalPage"
 
 import {ICartItem} from "../../../utils/interface"
-import {postNewBook, updateBook} from "../../../redux/actions/serverBooksActions"
+import {postNewBook, showBooksPagesLoading, updateBook} from "../../../redux/actions/serverBooksActions"
 import {getBookLocalId, getUserLocalId} from "../../../utils/localId"
 
 interface CustomProps {
@@ -144,11 +144,10 @@ function BookPages(
 
 	// Handle pages click
 	const previousPage = async () => {
-		let domElement = document.getElementById("my-node")
-		dispatch(showPagesImagesLoading())
-		let img = ""
 		if (+pageNumber > 0) {
-			const objCopy = {...pagesImages}
+			let domElement = document.getElementById("my-node")
+			dispatch(showBooksPagesLoading())
+			let img = ""
 			if (domElement) {
 				await htmlToImage.toPng(domElement)
 					.then(function (dataUrl) {
@@ -161,8 +160,9 @@ function BookPages(
 						return "error"
 					})
 			}
+			const objCopy = {...pagesImages}
+			dispatch(updateBook(pageNumber, img))
 			objCopy[pageNumber] = img
-			dispatch(changePagesImages(objCopy))
 			const prevPage = +pageNumber - 1
 			history.push(`/editor/pages/${prevPage}`)
 		}
@@ -170,7 +170,7 @@ function BookPages(
 
 	const nextPage = async () => {
 		let domElement = document.getElementById("my-node")
-		dispatch(showPagesImagesLoading())
+		dispatch(showBooksPagesLoading())
 		let img = ""
 		if (domElement) {
 			await htmlToImage.toPng(domElement)
@@ -187,19 +187,18 @@ function BookPages(
 		const objCopy = {...pagesImages}
 		dispatch(updateBook(pageNumber, img))
 		objCopy[pageNumber] = img
-		dispatch(changePagesImages(objCopy))
 		if (+pageNumber < 20) {
 			const nexPage = +pageNumber + 1
 			history.push(`/editor/pages/${nexPage}`)
 		} else if (pageNumber === "20") {
 			const newCartItem:ICartItem = {
 				itemType: "book",
-				previewImage: pagesImages[0],
 				name: t("cartItems.book.name", {
 					personOne: avatars[0].avatarName,
 					personTwo: avatars[1].avatarName}),
 				description: t("cartItems.book.description"),
-				price: 39.99
+				price: 39.99,
+				id: window.localStorage.getItem("bookId") || ""
 			}
 			const newCartItemsArray = [...cartItems, newCartItem]
 			dispatch(changeCartItems(newCartItemsArray))
@@ -346,8 +345,7 @@ const mapStateToProps = (state:RootState) => {
 		chosenItem: state.editorMenu.chosenItem,
 		pages: state.pages.pages,
 		avatars: state.avatars.avatars,
-		pagesImages: state.pages.pagesImages,
-		pagesImagesLoading: state.pages.pagesImagesLoading,
+		pagesImagesLoading: state.serverBook.loading,
 		cartItems: state.cart.items
 	}
 }

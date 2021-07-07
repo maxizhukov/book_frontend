@@ -11,11 +11,14 @@ import {ICartItem} from "../../../utils/interface"
 interface CustomProps {
 	cartItems?: any,
 	avatars?: any,
-	openPreviewModal: any
+	openPreviewModal: any,
+	serverBook?: any
 }
 
-function CartItem({cartItems, avatars, openPreviewModal}:CustomProps) {
+function CartItem({cartItems, avatars, openPreviewModal, serverBook}:CustomProps) {
 	const { t } = useTranslation()
+
+	console.log(serverBook)
 
 	return(
 		<div className="checkout_left">
@@ -51,7 +54,8 @@ function CartItem({cartItems, avatars, openPreviewModal}:CustomProps) {
 const mapStateToProps = (state:RootState) => {
 	return {
 		cartItems: state.cart.items,
-		avatars: state.avatars.avatars
+		avatars: state.avatars.avatars,
+		serverBook: state.serverBook.serverBook
 	}
 }
 

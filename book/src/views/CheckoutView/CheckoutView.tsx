@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {useTranslation} from "react-i18next"
 
 import "./CheckoutView.css"
@@ -7,6 +7,9 @@ import TotalComponent from "../../components/ checkout/totalComponent/TotalCompo
 import CartItem from "../../components/ checkout/cartItems/CartItems"
 import Modal from "react-modal"
 import BookPreviewModal from "../../components/modals/BookPreviewModal/BookPreviewModal"
+import {useDispatch} from "react-redux"
+import {getBook} from "../../redux/actions/serverBooksActions"
+import {getBookLocalId} from "../../utils/localId"
 
 
 // Styles for modal window
@@ -29,9 +32,17 @@ if (process.env.NODE_ENV !== "test") Modal.setAppElement("#root")
 
 export default function CheckoutView() {
 	const { t } = useTranslation()
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		const id = getBookLocalId()
+		if (id) {
+			dispatch(getBook(id))
+		}
+	}, [])
 
 	// Show preview modal
-	const [showModal, setShowModal] = useState(true)
+	const [showModal, setShowModal] = useState(false)
 
 	return(
 		<div className="checkout_view">
@@ -45,7 +56,7 @@ export default function CheckoutView() {
 			</Modal>
 			<h1>{t("checkout.title")}</h1>
 			<div className="checkout_container">
-				<CartItem openPreviewModal={setShowModal(true)} />
+				<CartItem openPreviewModal={() => setShowModal(true)} />
 				<TotalComponent />
 			</div>
 		</div>
