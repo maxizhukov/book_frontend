@@ -7,9 +7,10 @@ import TotalComponent from "../../components/ checkout/totalComponent/TotalCompo
 import CartItem from "../../components/ checkout/cartItems/CartItems"
 import Modal from "react-modal"
 import BookPreviewModal from "../../components/modals/BookPreviewModal/BookPreviewModal"
-import {useDispatch} from "react-redux"
+import {connect, useDispatch} from "react-redux"
 import {getBook} from "../../redux/actions/serverBooksActions"
 import {getBookLocalId} from "../../utils/localId"
+import {RootState} from "../../redux/reducers/rootReducer"
 
 
 // Styles for modal window
@@ -30,7 +31,11 @@ const customStyles = {
 }
 if (process.env.NODE_ENV !== "test") Modal.setAppElement("#root")
 
-export default function CheckoutView() {
+interface CustomProps {
+	serverBook?: any
+}
+
+function CheckoutView({serverBook}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 
@@ -56,9 +61,20 @@ export default function CheckoutView() {
 			</Modal>
 			<h1>{t("checkout.title")}</h1>
 			<div className="checkout_container">
-				<CartItem openPreviewModal={() => setShowModal(true)} />
+				{serverBook.pages
+					? <CartItem openPreviewModal={() => setShowModal(true)} />
+					: <p>Loading</p>
+				}
 				<TotalComponent />
 			</div>
 		</div>
 	)
 }
+
+const mapStateToProps = (state:RootState) => {
+	return {
+		serverBook: state.serverBook.serverBook
+	}
+}
+
+export default connect(mapStateToProps, null)(CheckoutView)

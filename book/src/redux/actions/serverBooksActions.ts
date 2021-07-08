@@ -80,7 +80,6 @@ export const updateBook = (page: string, image: any) =>
 export const getBook = (id: string) =>
 	async (dispatch: Dispatch<serverBooksTypes>) => {
 		const fullUrl = `${url}books/${id}`
-		console.log(fullUrl)
 		try {
 			const response = await axios.get(fullUrl)
 			if (response) {

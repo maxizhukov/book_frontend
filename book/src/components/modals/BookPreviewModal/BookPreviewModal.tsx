@@ -11,11 +11,14 @@ import sliderTest from "../../../img/sliderTest.png"
 
 interface CustomProps {
 	closeModal: () => void,
-	avatars?: any
+	avatars?: any,
+	serverBook?: any
 }
 
-function BookPreviewModal({closeModal, avatars}:CustomProps) {
+function BookPreviewModal({closeModal, avatars, serverBook}:CustomProps) {
 	const { t } = useTranslation()
+
+	const imagesArray:any = Object.values(serverBook.pages)
 
 	return(
 		<div className="modal_container_big">
@@ -41,15 +44,11 @@ function BookPreviewModal({closeModal, avatars}:CustomProps) {
 						showStatus={false}
 						showIndicators={false}
 					>
-						<div className="carousel_image_container">
-							<img src={sliderTest} className="carousel_image" alt="pageOne"/>
-						</div>
-						<div className="carousel_image_container">
-							<img src={sliderTest} className="carousel_image" alt="pageOne"/>
-						</div>
-						<div className="carousel_image_container">
-							<img src={sliderTest} className="carousel_image" alt="pageOne"/>
-						</div>
+						{imagesArray.map((item:any) => (
+							<div className="carousel_image_container" key={item}>
+								<img src={`http://localhost:5000/${item}`} className="carousel_image" alt="pageOne"/>
+							</div>
+						))}
 					</Carousel>
 				</div>
 
@@ -60,7 +59,8 @@ function BookPreviewModal({closeModal, avatars}:CustomProps) {
 
 const mapStateToProps = (state:RootState) => {
 	return {
-		avatars: state.avatars.avatars
+		avatars: state.avatars.avatars,
+		serverBook: state.serverBook.serverBook
 	}
 }
 

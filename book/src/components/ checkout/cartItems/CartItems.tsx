@@ -18,13 +18,17 @@ interface CustomProps {
 function CartItem({cartItems, avatars, openPreviewModal, serverBook}:CustomProps) {
 	const { t } = useTranslation()
 
-	console.log(serverBook)
+
 
 	return(
 		<div className="checkout_left">
 			{cartItems.map((item:ICartItem, i:number) => (
 				<div className="cart_item" key={`${item.name}${i}`}>
-					<img className="cart_item_image" src={item.previewImage} alt="cartImage"/>
+					<img
+						className="cart_item_image"
+						src={`http://localhost:5000/${serverBook.pages[0]}`}
+						alt="cartImage"
+					/>
 					<div style={{width: "100%"}}>
 						<div className="cart_item_space_between">
 							<div className="cart_item_text">
