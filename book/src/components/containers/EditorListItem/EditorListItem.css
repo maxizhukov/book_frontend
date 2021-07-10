@@ -5,6 +5,9 @@
     background: url("http://localhost:5000/uploads/myImage-1621894499434.jpeg") center no-repeat;
     background-size: contain;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .editor_list_item.selected {

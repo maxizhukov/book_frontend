@@ -1,22 +1,24 @@
 import {
 	avatarMenuTypes,
-	HANDLE_AVATAR_MENU, HANDLE_CHOSEN_ITEM,
+	HANDLE_AVATAR_MENU,
+	HANDLE_CHOSEN_ITEM,
 	HANDLE_PAGE,
-	HANDLE_PAGES_MENU
+	HANDLE_PAGES_MENU,
+	HANDLE_CHANGE_COLOR
 } from "../types/editorMenuTypes"
 
 const initialState = {
 	avatarMenu: {
 		category: "face_oval",
-		subCategories: ["editor.menu.faceOval"],
-		chosenSubCategory: "editor.menu.faceOval"
+		subCategories: ["editor.menu.faceOval"]
 	},
 	pagesMenu: {
-		subCategories: ["cover"],
-		chosenCategory: "background",
-		chosenSubCategory: "cover"
+		subCategories: [],
+		chosenCategory: "",
+		chosenSubCategory: ""
 	},
-	page: "0",
+	chosenColor: "",
+	page: undefined,
 	chosenItem: {
 		name: "",
 		index: undefined
@@ -46,6 +48,11 @@ export const editorMenuReducer = (
 		return{
 			...state,
 			chosenItem: action.payload
+		}
+	case HANDLE_CHANGE_COLOR:
+		return{
+			...state,
+			chosenColor: action.payload
 		}
 	default: return state
 	}

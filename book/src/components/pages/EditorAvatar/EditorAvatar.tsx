@@ -9,7 +9,6 @@ import {RootState} from "../../../redux/reducers/rootReducer"
 import EditorMenList from "../../containers/EditorMenuList/EditorMenuList"
 import AvatarContainer from "../../containers/AvatarContainer/AvatarContainer"
 import {Link, useHistory} from "react-router-dom"
-import {createCookie, getCookie} from "../../../utils/cookie"
 
 
 interface CustomProps {
@@ -23,8 +22,6 @@ function EditorAvatar({menuState, avatars}:CustomProps) {
 	const avatarIndex = window.location.search.slice(1,2)
 
 	const handleSaveClick = () => {
-		let jsonStr = JSON.stringify(avatars)
-		createCookie("mycookie", jsonStr, 100)
 		history.push("/editor")
 	}
 

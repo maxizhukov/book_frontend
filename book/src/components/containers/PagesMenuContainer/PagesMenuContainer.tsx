@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import "./PagesMenuContainer.css"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {connect, useDispatch} from "react-redux"
@@ -34,19 +34,8 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 		setCurrentPage(window.location.pathname.slice(14, window.location.pathname.length))
 	}, [location])
 
-	// Detect if cookie is parsed
-	const [cookieParsed, setCookieParsed] = useState(false)
-
 	useEffect(() => {
-		const jsonStr = getCookie("mycookie")
-		const arr = JSON.parse(jsonStr)
-		dispatch(changeAvatar(arr))
-		setCookieParsed(true)
-		// eslint-disable-next-line
-	}, [])
-
-	useEffect(() => {
-		if (menu.chosenCategory === "background" && cookieParsed && !avatarsLoading) {
+		if (menu.chosenCategory === "background" && !avatarsLoading) {
 			if (
 				menu.chosenSubCategory === "image"
 				|| menu.chosenSubCategory === "cover"
@@ -70,7 +59,7 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 			}
 		}
 		// eslint-disable-next-line
-	}, [dispatch, cookieParsed, avatarsLoading, menu])
+	}, [dispatch, avatarsLoading, menu])
 
 	useEffect(() => {
 		if (categories.pages.items
@@ -87,6 +76,7 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 			})
 			dispatch(changePages(pagesCopy))
 		}
+		// eslint-disable-next-line
 	}, [categories.pages])
 
 	// Get data and set to current post
@@ -120,6 +110,8 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 
 	// handle list item click
 	const handleItemClick = (name:string, img:string) => {
+		// type: 0 => images | type: 1 => text
+		const type = menu.chosenSubCategory === "text" ? "1" : "0"
 		setChosenItem(name)
 		const pagesCopy = [...pages.pages]
 		pagesCopy[+currentPage].background = img
@@ -127,44 +119,25 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 		categories.pages.items.forEach((post:any) => {
 			if (post.name === name) {
 				pagesCopy[+currentPage].pageItem = post
+				pagesCopy[+currentPage].backgroundType = type
 			}
 		})
 		dispatch(changePages(pagesCopy))
-		/*const avatarsCopy = [...pages]
-		if (menu.chosenSubCategory === "image") {
-			avatarsCopy[avatarIndex].faceOval = img
-			avatarsCopy[avatarIndex].faceName = name
-		}*/
-		/*
-		if (menuState.chosenSubCategory === "editor.menu.faceOval") {
-			avatarsCopy[avatarIndex].faceOval = img
-			avatarsCopy[avatarIndex].faceName = name
-		}*/
-		/*if ( menuState.category === "hair") {
-			avatarsCopy[avatarIndex].hair = img
-			avatarsCopy[avatarIndex].hairName = name
-		}
-		if ( menuState.category === "eyes") {
-			avatarsCopy[avatarIndex].eyes = img
-			avatarsCopy[avatarIndex].eyesName = name
-		}
-		if ( menuState.category === "eyebrows") {
-			avatarsCopy[avatarIndex].eyebrows = img
-			avatarsCopy[avatarIndex].eyebrowsName = name
-		}
-		if ( menuState.category === "lips") {
-			avatarsCopy[avatarIndex].lips = img
-			avatarsCopy[avatarIndex].lipsName = name
-		}
-		if ( menuState.category === "nose") {
-			avatarsCopy[avatarIndex].nose = img
-			avatarsCopy[avatarIndex].noseName = name
-		}
-		dispatch(changeAvatar(avatarsCopy))*/
 	}
 
 	const createUniqueId = (name:any) => {
 		return `${name}${Math.random().toString()}`
+	}
+
+	// Show loading, till items are not loaded
+	const [imagesLoading, setImagesLoading] = useState(true)
+
+	const counter = useRef(0)
+	const imageLoaded = () => {
+		counter.current += 1
+		if (counter.current >= currentPosts.length) {
+			setImagesLoading(false)
+		}
 	}
 
 	return(
@@ -178,6 +151,8 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 							preview={true}
 							chosenItem={`http://localhost:5000/${item.img}` === chosenItem}
 							handleItemClick={handleItemClick}
+							imageLoaded={imageLoaded}
+							loading={imagesLoading}
 						/>
 					</React.Fragment>
 				))

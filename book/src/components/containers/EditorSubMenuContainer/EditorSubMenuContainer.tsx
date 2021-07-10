@@ -3,7 +3,7 @@ import {RootState} from "../../../redux/reducers/rootReducer"
 import {connect, useDispatch} from "react-redux"
 import {useTranslation} from "react-i18next"
 import "./EditorSubMenuContainer.css"
-import {handleAvatarMenu} from "../../../redux/actions/editorMenuActions"
+import {changeColor, handleAvatarMenu} from "../../../redux/actions/editorMenuActions"
 import {changeAvatar} from "../../../redux/actions/avatarsActions"
 import {isMobile} from "react-device-detect"
 
@@ -37,6 +37,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 			}
 		})
 		avatarsCopy[avatarIndex].faceOval = `http://localhost:5000/${newFaceImage}`
+		dispatch(changeColor(name))
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick eyes color
@@ -54,6 +55,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 			}
 		})
 		avatarsCopy[avatarIndex].eyes = `http://localhost:5000/${newEyesImage}`
+		dispatch(changeColor(name))
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick eyebrows color
@@ -71,6 +73,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 			}
 		})
 		avatarsCopy[avatarIndex].eyebrows = `http://localhost:5000/${newEyesImage}`
+		dispatch(changeColor(name))
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick eyebrows color
@@ -88,6 +91,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 			}
 		})
 		avatarsCopy[avatarIndex].lips = `http://localhost:5000/${newLipsImage}`
+		dispatch(changeColor(name))
 		dispatch(changeAvatar(avatarsCopy))
 	}
 	// Pick hair color
@@ -105,6 +109,7 @@ function EditorSubMenuContainer({menuState, avatars, categories}:CustomProps) {
 			}
 		})
 		avatarsCopy[avatarIndex].hair = `http://localhost:5000/${newHairImage}`
+		dispatch(changeColor(name))
 		dispatch(changeAvatar(avatarsCopy))
 	}
 

@@ -10,6 +10,7 @@ import {changePages} from "../../../redux/actions/pagesActions"
 import {changeCartItems} from "../../../redux/actions/cartActions"
 import { useScreenshot } from "use-react-screenshot"
 
+import PropagateLoader from "react-spinners/PropagateLoader"
 import "./BookPages.css"
 
 import RoundedButton from "../../buttons/RoundedButton/RoundedButton"
@@ -22,6 +23,7 @@ import LocalPage from "../../containers/LocalPage/LocalPage"
 import {ICartItem} from "../../../utils/interface"
 import {postNewBook, showBooksPagesLoading, updateBook} from "../../../redux/actions/serverBooksActions"
 import {getBookLocalId, getUserLocalId} from "../../../utils/localId"
+import SavingContainer from "../../containers/SavingContainer/SavingContainer"
 
 interface CustomProps {
 	chosenItem?: any,
@@ -56,6 +58,7 @@ function BookPages(
 		} else {
 
 		}
+		// eslint-disable-next-line
 	}, [])
 
 	/*NEED FOR TRANSFORM FOR FORM DATA POST*/
@@ -254,7 +257,7 @@ function BookPages(
 				</div>
 				<div className="center" style={{width: "100%", height: "calc(100% - 50px)"}}>
 					{loadingPage
-						? <h1>Loading...</h1>
+						? <PropagateLoader />
 						:
 						<div className="page">
 							{local
@@ -263,7 +266,7 @@ function BookPages(
 								:
 								<div>
 									{pagesImagesLoading
-										? <p className="book_saving">Saving</p> : null}
+										? <SavingContainer /> : null}
 									<div className="avatar_box">
 										<div
 											ref={pageRef}

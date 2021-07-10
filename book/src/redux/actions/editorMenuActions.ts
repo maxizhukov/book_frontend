@@ -1,5 +1,5 @@
 import {
-	HANDLE_AVATAR_MENU, HANDLE_CHOSEN_ITEM,
+	HANDLE_AVATAR_MENU, HANDLE_CHANGE_COLOR, HANDLE_CHOSEN_ITEM,
 	HANDLE_PAGE,
 	HANDLE_PAGES_MENU
 } from "../types/editorMenuTypes"
@@ -35,6 +35,15 @@ export function handlePagesMenu(
 		}
 	}
 }
+
+// Trigger change color for update loading state for images
+export function changeColor(color:string) {
+	return {
+		type: HANDLE_CHANGE_COLOR,
+		payload: color
+	}
+}
+
 
 // Handle page
 export function handlePage(pageNumber:string) {

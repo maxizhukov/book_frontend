@@ -44,6 +44,7 @@ function CheckoutView({serverBook}:CustomProps) {
 		if (id) {
 			dispatch(getBook(id))
 		}
+	// eslint-disable-next-line
 	}, [])
 
 	// Show preview modal

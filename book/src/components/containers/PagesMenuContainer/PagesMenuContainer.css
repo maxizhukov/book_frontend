@@ -6,4 +6,5 @@
     box-sizing: border-box;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
+    box-sizing: border-box;
 }

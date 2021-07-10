@@ -16,7 +16,7 @@ function PagesEditorToolbar({menuState}:CustomProps) {
 	const dispatch = useDispatch()
 	const location = useLocation()
 
-	const [currentPage, setCurrentPage] = useState("0")
+	const [currentPage, setCurrentPage] = useState<string | undefined>(undefined)
 
 	useEffect(() => {
 		setCurrentPage(location.pathname.slice(14, window.location.pathname.length))
@@ -35,8 +35,9 @@ function PagesEditorToolbar({menuState}:CustomProps) {
 				subCategories = ["cover"]
 				chosenSubCategory = "cover"
 			} else {
+				/*console.log(menuState.chosenSubCategory)*/
 				subCategories = ["image", "text"]
-				chosenSubCategory = "image"
+				chosenSubCategory = menuState.chosenSubCategory
 			}
 			break
 		default: 

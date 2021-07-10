@@ -11,7 +11,7 @@ const composeEnhancers =
 const persistConfig = {
 	key: "pages",
 	storage: storage,
-	whitelist: ["pages", "serverBook", "cart"]
+	whitelist: ["pages", "serverBook", "cart", "avatars", "editorMenu"]
 }
 
 const pReducer = persistReducer(persistConfig, rootReducer)

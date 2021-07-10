@@ -55,7 +55,7 @@
     .cart_item_space_between {
         display: flex;
         flex-direction: column;
-        align-items: start;
+        align-items: flex-start;
     }
     .cart_item_links_row {
         font-size: 12px;

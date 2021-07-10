@@ -1,0 +1,24 @@
+.book_saving {
+    width: 97%;
+    height: 100%;
+    background-color: #FFF3F3;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.saving_small {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.saving_small > p {
+    margin-top: 40px;
+    color: #abaaaa;
+}
+

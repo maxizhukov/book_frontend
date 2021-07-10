@@ -41,10 +41,12 @@ input {
     align-items: center;
     overflow-x: auto;
     min-width: 600px;
+    box-sizing: border-box;
 }
 
 .toolbar_scroll {
     overflow-x: auto;
+    box-sizing: border-box;
 }
 
 .toolbar_scroll_mobile {

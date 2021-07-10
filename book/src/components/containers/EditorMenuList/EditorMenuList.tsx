@@ -16,10 +16,11 @@ import {changeAvatar} from "../../../redux/actions/avatarsActions"
 interface CustomProps {
 	categories?: any,
 	menuState?: any,
-	avatars?: any
+	avatars?: any,
+	colorChange?: string
 }
 
-function EditorMenList({categories, menuState, avatars}:CustomProps) {
+function EditorMenList({categories, menuState, avatars, colorChange}:CustomProps) {
 	const dispatch = useDispatch()
 	const avatarIndex:any = +window.location.search.slice(1,2)
 
@@ -269,14 +270,21 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 	}
 
 	// Show loading, till items are not loaded
-	const [loading, setLoading] = useState(true)
+	const [imagesLoading, setImagesLoading] = useState(true)
+
 	const counter = useRef(0)
 	const imageLoaded = () => {
 		counter.current += 1
 		if (counter.current >= currentPosts.length) {
-			setLoading(false)
+			setTimeout(() => {
+				setImagesLoading(false)
+			}, 200)
 		}
 	}
+
+	useEffect(() => {
+		setImagesLoading(true)
+	}, [colorChange, menuState])
 
 	return(
 		<div className="editor_items_list">
@@ -288,6 +296,8 @@ function EditorMenList({categories, menuState, avatars}:CustomProps) {
 							item={item}
 							chosenItem={`http://localhost:5000/${item.img}` === chosenItem}
 							handleItemClick={handleItemClick}
+							imageLoaded={imageLoaded}
+							loading={imagesLoading}
 						/>
 					</React.Fragment>
 				))
@@ -300,7 +310,8 @@ const mapStateToProps = (state:RootState) => {
 	return {
 		categories: state.categories,
 		menuState: state.editorMenu.avatarMenu,
-		avatars: state.avatars.avatars
+		avatars: state.avatars.avatars,
+		colorChange: state.editorMenu.chosenColor
 	}
 }
 

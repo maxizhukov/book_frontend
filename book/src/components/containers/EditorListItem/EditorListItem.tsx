@@ -1,4 +1,5 @@
 import React from "react"
+import BeatLoader from "react-spinners/BeatLoader"
 import "./EditorListItem.css"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {connect} from "react-redux"
@@ -8,15 +9,25 @@ interface CustomProps {
 	chosenItem: boolean,
 	menuState?: any,
 	handleItemClick: (name:string, img:string, secondImage?:string) => void,
-	preview?: boolean
+	preview?: boolean,
+	imageLoaded: () => void,
+	loading: boolean
 }
 
-function EditorListItem({item, chosenItem, menuState,
-										   handleItemClick, preview}:CustomProps) {
+function EditorListItem({
+	item,
+	chosenItem,
+	menuState,
+	handleItemClick,
+	preview,
+	imageLoaded,
+	loading
+}:CustomProps) {
 	const url = "http://localhost:5000/"
 	const image = preview ? `${url}${item.preview}` : `${url}${item.img}`
 
 	return(
+		
 		<div
 			onClick={() =>
 				handleItemClick(
@@ -25,14 +36,20 @@ function EditorListItem({item, chosenItem, menuState,
 					menuState.category === "hair" ? `${url}${item.secondImage}` : ""
 				)}
 			className={chosenItem ? "editor_list_item selected" : "editor_list_item"}
-			style={{backgroundImage: `url("${image}")`}}
 		>
-			{chosenItem
-				?
-				<div className="checked_dot">
-					<i className="fas fa-check" />
-				</div>
-				: null}
+			{loading
+				? <BeatLoader loading={true} size={8} color={"#30A6D9"} />
+				: null
+			}
+			<img
+				onLoad={imageLoaded}
+				width="80%"
+				src={image}
+				style={loading
+					? {display: "none"}
+					: {display: "block"}
+				}
+				alt=""/>
 		</div>
 	)
 };

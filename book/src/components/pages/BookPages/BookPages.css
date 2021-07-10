@@ -16,6 +16,7 @@
     height: 50px;
     padding-left: 15px;
     padding-right: 15px;
+    box-sizing: border-box;
 }
 
 .pages_menu_dropdown {
@@ -45,7 +46,6 @@
 }
 
 .page_element {
-    border: none;
     overflow: hidden;
     outline: none;
     -webkit-box-shadow: none;
@@ -54,25 +54,18 @@
     resize: none;
     background-color: transparent;
     border-radius: 10px;
+    box-sizing: border-box;
+    border: 2px solid transparent;
 }
 
 .page_element:hover {
     border: 2px dashed black;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .page_element:focus {
     border: 2px dashed black;
     cursor: pointer;
-}
-
-.book_saving {
-    width: 100%;
-    height: 100%;
-    background-color: #0ce90c;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1000;
 }
 

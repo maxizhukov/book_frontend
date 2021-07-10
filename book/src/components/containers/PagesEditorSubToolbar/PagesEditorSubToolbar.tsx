@@ -5,12 +5,14 @@ import {connect, useDispatch} from "react-redux"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {handlePagesMenu} from "../../../redux/actions/editorMenuActions"
 import {useLocation} from "react-router"
+import {image} from "html2canvas/dist/types/css/types/image"
 
 interface CustomProps {
-	menuState?: any
+	menuState?: any,
+	pages?: any
 }
 
-function PagesEditorSubToolbar({menuState}:CustomProps) {
+function PagesEditorSubToolbar({menuState, pages}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const location = useLocation()
@@ -24,7 +26,6 @@ function PagesEditorSubToolbar({menuState}:CustomProps) {
 	useEffect(() => {
 		setPage(location.pathname.slice(14, window.location.pathname.length))
 	}, [location])
-
 
 	return(
 		<div className="row pages_sub_menu">
@@ -59,7 +60,8 @@ function PagesEditorSubToolbar({menuState}:CustomProps) {
 
 const mapStateToProps = (state:RootState) => {
 	return {
-		menuState: state.editorMenu.pagesMenu
+		menuState: state.editorMenu.pagesMenu,
+		pages: state.pages.pages
 	}
 }
 

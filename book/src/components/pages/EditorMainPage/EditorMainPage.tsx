@@ -49,6 +49,24 @@ function EditorMainPage({avatars}:CustomProps) {
 		}
 	}
 
+	// Disable continue button
+	const [disableButton, setDisableButton] = useState(true)
+
+	useEffect(() => {
+		let requiredItem = 0
+		avatars.forEach((avatar:any) => {
+			if (avatar.avatarName.trim().length) {
+				requiredItem += 1
+				if (avatar.avatarGender.trim().length) {
+					requiredItem += 1
+				}
+ 			}
+			if (requiredItem === 4) {
+				setDisableButton(false)
+			}
+		})
+	}, [avatars])
+
 	return(
 		<>
 			<h1>Main</h1>
@@ -71,6 +89,7 @@ function EditorMainPage({avatars}:CustomProps) {
 						full={true}
 						customStyle="outlined"
 						text="BUTTON"
+						disabled={disableButton}
 					/>
 				</div>
 			</div>

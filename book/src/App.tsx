@@ -26,7 +26,9 @@ function App() {
 		if (!userId) {
 			const postNewUser = async () => {
 				try {
-					const response = await axios.post("http://localhost:5000/api/users")
+					const response = await axios.post("http://localhost:5000/api/users", {
+						"createdAt": new Date()
+					})
 					let values:string[] = []
 					const data = response.data.id
 					const oneDay = new Date()
@@ -48,7 +50,6 @@ function App() {
 		} else if (userId) {
 			let values = localStorage.getItem("userId")?.split(";")
 			if (values) {
-				console.log(new Date(values[1]))
 				if (new Date(values[1]) < new Date()) {
 					const postNewUser = async () => {
 						try {
