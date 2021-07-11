@@ -9,10 +9,11 @@ import {image} from "html2canvas/dist/types/css/types/image"
 
 interface CustomProps {
 	menuState?: any,
-	pages?: any
+	pages?: any,
+	pagesImagesLoading?: boolean
 }
 
-function PagesEditorSubToolbar({menuState, pages}:CustomProps) {
+function PagesEditorSubToolbar({menuState, pages, pagesImagesLoading}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const location = useLocation()
@@ -28,7 +29,10 @@ function PagesEditorSubToolbar({menuState, pages}:CustomProps) {
 	}, [location])
 
 	return(
-		<div className="row pages_sub_menu">
+		<div
+			className="row pages_sub_menu"
+			style={pagesImagesLoading ? {pointerEvents: "none"} : {}}
+		>
 			{page === "0"
 				?
 				<p
@@ -61,7 +65,8 @@ function PagesEditorSubToolbar({menuState, pages}:CustomProps) {
 const mapStateToProps = (state:RootState) => {
 	return {
 		menuState: state.editorMenu.pagesMenu,
-		pages: state.pages.pages
+		pages: state.pages.pages,
+		pagesImagesLoading: state.serverBook.loading
 	}
 }
 

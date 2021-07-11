@@ -24,6 +24,7 @@ import {ICartItem} from "../../../utils/interface"
 import {postNewBook, showBooksPagesLoading, updateBook} from "../../../redux/actions/serverBooksActions"
 import {getBookLocalId, getUserLocalId} from "../../../utils/localId"
 import SavingContainer from "../../containers/SavingContainer/SavingContainer"
+import LoadingBookPage from "../../containers/LoadingBookPage/LoadingBookPage"
 
 interface CustomProps {
 	chosenItem?: any,
@@ -55,44 +56,10 @@ function BookPages(
 			} else {
 				console.log("Something with userId")
 			}
-		} else {
-
 		}
 		// eslint-disable-next-line
 	}, [])
 
-	/*NEED FOR TRANSFORM FOR FORM DATA POST*/
-	/*const DataURIToBlob = (dataURI: string) => {
-		const splitDataURI = dataURI.split(",")
-		const byteString = splitDataURI[0].indexOf("base64") >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
-		const mimeString = splitDataURI[0].split(":")[1].split(";")[0]
-
-		const ia = new Uint8Array(byteString.length)
-		for (let i = 0; i < byteString.length; i++)
-			ia[i] = byteString.charCodeAt(i)
-
-		return new Blob([ia], { type: mimeString })
-	}
-*/
-	/*const update = async (data:any) => {
-		const file = DataURIToBlob(data)
-		let bodyFormData = new FormData()
-		bodyFormData.append("myImage", file)
-		bodyFormData.append("name", "preview")
-		const config = {
-			headers: { "Content-Type": "multipart/form-data" }
-		}
-		try {
-			const response = await axios.put(
-				"http://localhost:5000/api/pages/60ce38a84de18f101bf2d8b0",
-				bodyFormData,
-				config)
-			console.log(response)
-		} catch (e) {
-			console.log(e)
-		}
-	}
-*/
 	const [avatarsFromCookie, setAvatarsFromCookie] = useState([])
 
 	const [loadingPage, setLoadingPage] = useState(true)
@@ -231,6 +198,15 @@ function BookPages(
 
 	const [local, setLocal] = useState(false)
 
+	// Show loading when background changed
+	const [backgroundChangeLoading, setBackgroundChangeLoading] = useState(false)
+	const showBackgroundChangeLoading = () => {
+		setBackgroundChangeLoading(true)
+		setTimeout(() => {
+			setBackgroundChangeLoading(false)
+		}, 200)
+	}
+
 	return(
 		<div className="book_page">
 			<div className="avatar_page_window">
@@ -239,6 +215,7 @@ function BookPages(
 						handleClick={previousPage}
 						customStyle="outlined"
 						text={t("editor.pages.back_btn")}
+						disabled={pagesImagesLoading}
 					/>
 					{pageNumber === "0"
 						?
@@ -250,6 +227,7 @@ function BookPages(
 					<RoundedButton
 						handleClick={nextPage}
 						customStyle="primary"
+						disabled={pagesImagesLoading}
 						text={pageNumber === "20"
 							? t("editor.pages.save_btn")
 							: t("editor.pages.next_btn")}
@@ -267,6 +245,8 @@ function BookPages(
 								<div>
 									{pagesImagesLoading
 										? <SavingContainer /> : null}
+									{backgroundChangeLoading
+										? <LoadingBookPage /> : null}
 									<div className="avatar_box">
 										<div
 											ref={pageRef}
@@ -337,7 +317,7 @@ function BookPages(
 			<div className="avatar_page_menu" >
 				<PagesEditorToolbar />
 				<PagesEditorSubToolbar />
-				<PagesMenuContainer />
+				<PagesMenuContainer showBackgroundChangeLoading={showBackgroundChangeLoading} />
 			</div>
 		</div>
 	)

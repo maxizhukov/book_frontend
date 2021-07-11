@@ -4,3 +4,47 @@
     background-color: #0ce90c;
     cursor: pointer;
 }
+
+.editor_main_header {
+    padding-left: 52px;
+    padding-right: 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main_page_avatars_container {
+    width: 50vw;
+    height: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    position: relative;
+}
+
+.main_page_avatars_body.first {
+    position: absolute;
+    width: 80%;
+    left: -5%;
+    top: 10%;
+}
+
+.main_page_avatars_body.second {
+    position: absolute;
+    width: 80%;
+    left: 25%;
+    top: 10%;
+}
+
+@media (max-width: 1000px) {
+    .editor_main_header {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+    .main_page_avatars_container {
+        width: 90vw;
+        height: 90vw;
+        margin-top: 20px;
+    }
+
+}

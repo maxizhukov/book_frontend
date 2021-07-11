@@ -14,10 +14,20 @@ interface CustomProps {
 	categories?: any,
 	pages?: any,
 	avatars?: any,
-	avatarsLoading?: boolean
+	avatarsLoading?: boolean,
+	pagesImagesLoading?: boolean,
+	showBackgroundChangeLoading: () => void
 }
 
-function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:CustomProps) {
+function PagesMenuContainer({
+	menu, 
+	categories, 
+	pages,
+	avatars, 
+	avatarsLoading, 
+	pagesImagesLoading,
+	showBackgroundChangeLoading
+}:CustomProps) {
 	const dispatch = useDispatch()
 	const location = useLocation()
 
@@ -110,6 +120,7 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 
 	// handle list item click
 	const handleItemClick = (name:string, img:string) => {
+		showBackgroundChangeLoading()
 		// type: 0 => images | type: 1 => text
 		const type = menu.chosenSubCategory === "text" ? "1" : "0"
 		setChosenItem(name)
@@ -141,7 +152,10 @@ function PagesMenuContainer({menu, categories, pages, avatars, avatarsLoading}:C
 	}
 
 	return(
-		<div className="pages_menu_container">
+		<div
+			className="pages_menu_container"
+			style={pagesImagesLoading ? {pointerEvents: "none"} : {}}
+		>
 			{categories.loading
 				? <p>Loading</p>
 				: currentPosts.map((item:any) => (
@@ -167,7 +181,8 @@ const mapStateToProps = (state:RootState) => {
 		categories: state.categories,
 		pages: state.pages,
 		avatars: state.avatars.avatars,
-		avatarsLoading: state.avatars.loading
+		avatarsLoading: state.avatars.loading,
+		pagesImagesLoading: state.serverBook.loading
 	}
 }
 

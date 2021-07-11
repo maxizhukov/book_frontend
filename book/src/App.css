@@ -82,6 +82,12 @@ input {
     align-items: center;
 }
 
+.space_between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 @media (max-width: 1000px) {
     .toolbar_container {
         padding-top: 5px;

@@ -1,5 +1,13 @@
 {
   "editor": {
+    "main": {
+      "header": {
+        "btn": "CREATE BOOK"
+      },
+      "content": {
+        "title": "Click on avatar and create your own awesome avatars"
+      }
+    },
     "avatar": {
       "window_back_btn": "Back",
       "window_save_btn": "Save",
@@ -22,6 +30,7 @@
       "save_btn": "Save",
       "page": "Page",
       "cover": "Book cover",
+      "saving_text": "Saving page",
       "menu": {
         "background": "Background",
         "actions": "Actions",

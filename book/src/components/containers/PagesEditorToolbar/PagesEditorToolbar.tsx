@@ -8,10 +8,11 @@ import {RootState} from "../../../redux/reducers/rootReducer"
 import {useLocation} from "react-router"
 
 interface CustomProps {
-	menuState?: any
+	menuState?: any,
+	pagesImagesLoading?: any
 }
 
-function PagesEditorToolbar({menuState}:CustomProps) {
+function PagesEditorToolbar({menuState, pagesImagesLoading}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const location = useLocation()
@@ -48,8 +49,16 @@ function PagesEditorToolbar({menuState}:CustomProps) {
 	}
 
 	return(
-		<div className={isMobile ? "toolbar_scroll_mobile" : "toolbar_scroll"}>
-			<div className="toolbar_container" style={{minWidth: "400px"}}>
+		<div
+			className={isMobile ? "toolbar_scroll_mobile" : "toolbar_scroll"}
+		>
+			<div
+				className="toolbar_container"
+				style={pagesImagesLoading ? {
+					minWidth: "400px",
+					pointerEvents: "none"
+				} : {minWidth: "400px"}}
+			>
 				<p
 					onClick={() => handleItemClick("background")}
 					className={menuState.chosenCategory === "background"
@@ -64,7 +73,8 @@ function PagesEditorToolbar({menuState}:CustomProps) {
 
 const mapStateToProps = (state:RootState) => {
 	return {
-		menuState: state.editorMenu.pagesMenu
+		menuState: state.editorMenu.pagesMenu,
+		pagesImagesLoading: state.serverBook.loading
 	}
 }
 
