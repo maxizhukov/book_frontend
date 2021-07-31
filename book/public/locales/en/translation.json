@@ -56,7 +56,12 @@
       "remove": "Remove"
     },
     "book_modal": {
-      "title": "Preview of {{personOne}} and {{personTwo}} Love story book"
+      "title": "Preview of {{personOne}} and {{personTwo}} Love story book",
+      "btn": {
+        "preview": "Preview",
+        "edit": "Edit",
+        "close": "Close"
+      }
     }
   },
   "cartItems": {

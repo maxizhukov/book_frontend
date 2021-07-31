@@ -4,7 +4,7 @@ import {useLocation, useParams} from "react-router"
 import {useHistory} from "react-router-dom"
 import * as htmlToImage from "html-to-image"
 import {connect, useDispatch} from "react-redux"
-import {handleChosenItem} from "../../../redux/actions/editorMenuActions"
+import {handleChosenItem, handlePagesMenu} from "../../../redux/actions/editorMenuActions"
 import {RootState} from "../../../redux/reducers/rootReducer"
 import {changePages} from "../../../redux/actions/pagesActions"
 import {changeCartItems} from "../../../redux/actions/cartActions"
@@ -36,13 +36,12 @@ interface CustomProps {
 }
 
 function BookPages(
-	{chosenItem, pages, avatars, pagesImages, pagesImagesLoading, cartItems}:CustomProps) {
+	{ pages, avatars, pagesImages, pagesImagesLoading, cartItems}:CustomProps) {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const id:any = useParams()
 	const location = useLocation()
-	const [image, takeScreenshot] = useScreenshot()
 
 	const url = "http://localhost:5000/"
 
@@ -60,8 +59,6 @@ function BookPages(
 		// eslint-disable-next-line
 	}, [])
 
-	const [avatarsFromCookie, setAvatarsFromCookie] = useState([])
-
 	const [loadingPage, setLoadingPage] = useState(true)
 
 	// Current page
@@ -72,10 +69,14 @@ function BookPages(
 
 	// Take page from url and save to state
 	useEffect(() => {
-		setCurrentPage(window.location.pathname.slice(14, +window.location.pathname.length))
-		setPageData(pages[window.location.pathname.slice(14, +window.location.pathname.length)])
+		const pageNumber = +window.location.pathname.slice(14, +window.location.pathname.length)
+		setCurrentPage(pageNumber.toString())
+		setPageData(pages[pageNumber])
+		if (loadingPage && pages[pageNumber] && pages[pageNumber].background) {
+			setLoadingPage(false)
+		}
 		// eslint-disable-next-line
-	}, [location])
+	}, [location, pages])
 
 	// Change font size
 	const changeFontSize = (style:any) => {
@@ -84,15 +85,6 @@ function BookPages(
 		changedStyles.fontSize = `${fontSize}px`
 		return changedStyles
 	}
-
-	// Show loading till page will not rendered
-	useEffect(() => {
-		if (loadingPage && pageData.background) {
-			setLoadingPage(false)
-		}
-		// eslint-disable-next-line
-	}, [pageData.background])
-
 
 	// Take width of page container to set font size
 	const [containerWidth, setContainerWidth] = useState(0)
@@ -159,6 +151,9 @@ function BookPages(
 		objCopy[pageNumber] = img
 		if (+pageNumber < 20) {
 			const nexPage = +pageNumber + 1
+			if (pageNumber === "0") {
+				dispatch(handlePagesMenu("background", ["image", "text"], "image"))
+			}
 			history.push(`/editor/pages/${nexPage}`)
 		} else if (pageNumber === "20") {
 			const newCartItem:ICartItem = {

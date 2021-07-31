@@ -20,11 +20,11 @@ interface CustomProps {
 }
 
 function PagesMenuContainer({
-	menu, 
-	categories, 
+	menu,
+	categories,
 	pages,
-	avatars, 
-	avatarsLoading, 
+	avatars,
+	avatarsLoading,
 	pagesImagesLoading,
 	showBackgroundChangeLoading
 }:CustomProps) {
@@ -57,6 +57,7 @@ function PagesMenuContainer({
 				const skinTwo = `s${avatars[1].skinName}`
 				const personOne = `${genderOne}${skinOne}`
 				const personTwo = `${genderTwo}${skinTwo}`
+				console.log(menu.chosenSubCategory)
 				if (menu.chosenSubCategory === "image") {
 					dispatch(getPages("img", personOne, personTwo))
 				} else if (menu.chosenSubCategory === "cover") {
@@ -64,8 +65,6 @@ function PagesMenuContainer({
 				} else if (menu.chosenSubCategory === "text") {
 					dispatch(getPages("text", personOne, personTwo))
 				}
-			} else {
-				dispatch(getPages("img"))
 			}
 		}
 		// eslint-disable-next-line
@@ -74,7 +73,7 @@ function PagesMenuContainer({
 	useEffect(() => {
 		if (categories.pages.items
 			&& categories.pages.items.length
-			&& !pages.pages[currentPage].background) {
+			&& !pages.pages[currentPage]?.background) {
 			setChosenItem(categories.pages.items[0].name)
 			const pagesCopy = [...pages.pages]
 			pagesCopy[+currentPage].background = `${url}${categories.pages.items[0].types[0].img}`
@@ -111,7 +110,10 @@ function PagesMenuContainer({
 
 	// Set chosen data
 	useEffect(() => {
-		setChosenItem(pages.pages[+currentPage].background)
+		if (+currentPage !== undefined) {
+			setChosenItem(pages.pages[+currentPage].background)
+		}
+
 		// eslint-disable-next-line
 	}, [menu, pages])
 

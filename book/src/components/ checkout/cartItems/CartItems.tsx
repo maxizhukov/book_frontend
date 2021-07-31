@@ -44,8 +44,6 @@ function CartItem({cartItems, avatars, openPreviewModal, serverBook}:CustomProps
 							<p onClick={openPreviewModal}>
 								{t("checkout.item.preview")}
 							</p>
-							<p>{t("checkout.item.edit")}</p>
-							<p>{t("checkout.item.remove")}</p>
 						</div>
 					</div>
 

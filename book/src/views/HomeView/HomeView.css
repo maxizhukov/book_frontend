@@ -1,0 +1,22 @@
+.main {
+    height: 2000px;
+}
+
+.par_title_container {
+    position: fixed;
+    width: max-content;
+    left: calc(50% - 180px);
+    top: 50%;
+}
+
+.par_title_container > h1 {
+    font-size: 26px;
+    position: relative;
+    z-index: 1;
+}
+.par_title_container > h2 {
+    font-size: 26px;
+    position: relative;
+    z-index: 2;
+    background: white;
+}

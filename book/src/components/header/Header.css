@@ -1,0 +1,28 @@
+header {
+    box-sizing: border-box;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+header > img {
+    height: 40px;
+}
+
+.header_link {
+    margin-right: 20px;
+    outline: none;
+    text-decoration: none;
+    color: #37B9F1;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.links_row {
+    margin-right: 50px;
+}

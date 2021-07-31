@@ -47,7 +47,7 @@ function EditorMenList({categories, menuState, avatars, colorChange}:CustomProps
 			break
 		}
 	}
-	
+
 	// dispatch data
 	useEffect(() => {
 		if (menuState) {
@@ -273,6 +273,7 @@ function EditorMenList({categories, menuState, avatars, colorChange}:CustomProps
 	const [imagesLoading, setImagesLoading] = useState(true)
 
 	const counter = useRef(0)
+
 	const imageLoaded = () => {
 		counter.current += 1
 		if (counter.current >= currentPosts.length) {

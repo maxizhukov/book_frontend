@@ -1,11 +1,15 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import "./HomeView.css"
+import Header from "../../components/header/Header"
 
 export default function HomeView() {
+
 	return(
 		<>
-			<h1>HOME</h1>
-			<Link to="/editor"> Create Book </Link>
+			<Header />
+			<main className="main">
+
+			</main>
 		</>
 	)
 }
