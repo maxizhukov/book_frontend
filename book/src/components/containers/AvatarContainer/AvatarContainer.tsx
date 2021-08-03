@@ -12,7 +12,9 @@ interface CustomProps {
 function AvatarContainer({avatars, existingIndex, pagesAvatar}:CustomProps) {
 	const avatarIndex:number = +window.location.search.slice(1,2)
 
-	let index = existingIndex ? existingIndex : avatarIndex
+	let index = existingIndex === 0 || existingIndex === 1 ? existingIndex : avatarIndex
+
+
 
 	return(
 		<div className="page" id={index.toString()}>

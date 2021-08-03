@@ -171,6 +171,38 @@ function BookPages(
 		}
 	}
 
+	const handleClickToPreview = async () => {
+		let domElement = document.getElementById("my-node")
+		dispatch(showBooksPagesLoading())
+		let img = ""
+		if (domElement) {
+			await htmlToImage.toPng(domElement)
+				.then(function (dataUrl) {
+					if (dataUrl) {
+						img = dataUrl
+					}
+				})
+				.catch(function (error) {
+					console.error("oops, something went wrong!", error)
+					return "error"
+				})
+		}
+		const objCopy = {...pagesImages}
+		dispatch(updateBook(pageNumber, img))
+		objCopy[pageNumber] = img
+		const newCartItem:ICartItem = {
+			itemType: "book",
+			name: t("cartItems.book.name", {
+				personOne: avatars[0].avatarName,
+				personTwo: avatars[1].avatarName}),
+			description: t("cartItems.book.description"),
+			price: 39.99,
+			id: window.localStorage.getItem("bookId") || ""
+		}
+		dispatch(changeCartItems([newCartItem]))
+		history.push("/checkout")
+	}
+
 	const handleItemFocus = (name:string, i:string) => {
 		dispatch(handleChosenItem(
 			{name: name, index: i}
@@ -202,32 +234,58 @@ function BookPages(
 		}, 200)
 	}
 
+	// Set is user came from edit page from checkout
+	const [editPage, setEditPage] = useState(false)
+
+	useEffect(() => {
+		if (location.search === "?edit") {
+			setEditPage(true)
+		}
+	}, [location])
+
 	return(
 		<div className="book_page">
 			<div className="avatar_page_window">
-				<div className="page_window_header">
-					<RoundedButton
-						handleClick={previousPage}
-						customStyle="outlined"
-						text={t("editor.pages.back_btn")}
-						disabled={pagesImagesLoading}
-					/>
-					{pageNumber === "0"
-						?
-						<p className="page_title">{t("editor.pages.cover")}</p>
-						:
-						<p className="page_title">{t("editor.pages.page")} {pageNumber}</p>
-					}
+				{editPage
+					?
+					<div className="center" style={{
+						marginTop: "20px",
+						marginBottom: "-20px",
+						position: "relative",
+						zIndex: 1000
+					}}>
+						<RoundedButton
+							handleClick={handleClickToPreview}
+							customStyle="outlined"
+							text={t("editor.pages.btn_save_and_go_to_checkout")}
+							disabled={pagesImagesLoading}
+						/>
+					</div>
+					:
+					<div className="page_window_header">
+						<RoundedButton
+							handleClick={previousPage}
+							customStyle="outlined"
+							text={t("editor.pages.back_btn")}
+							disabled={pagesImagesLoading}
+						/>
+						{pageNumber === "0"
+							?
+							<p className="page_title">{t("editor.pages.cover")}</p>
+							:
+							<p className="page_title">{t("editor.pages.page")} {pageNumber}</p>
+						}
 
-					<RoundedButton
-						handleClick={nextPage}
-						customStyle="primary"
-						disabled={pagesImagesLoading}
-						text={pageNumber === "20"
-							? t("editor.pages.save_btn")
-							: t("editor.pages.next_btn")}
-					/>
-				</div>
+						<RoundedButton
+							handleClick={nextPage}
+							customStyle="primary"
+							disabled={pagesImagesLoading}
+							text={pageNumber === "20"
+								? t("editor.pages.save_btn")
+								: t("editor.pages.next_btn")}
+						/>
+					</div>
+				}
 				<div className="center" style={{width: "100%", height: "calc(100% - 50px)"}}>
 					{loadingPage
 						? <PropagateLoader />

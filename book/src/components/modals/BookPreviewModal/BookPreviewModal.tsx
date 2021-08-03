@@ -81,9 +81,11 @@ function BookPreviewModal({closeModal, avatars, serverBook}:CustomProps) {
 										>
 											{t("checkout.book_modal.btn.preview")}
 										</button>
-										<button className="check_preview_button">
+										<button
+											className="check_preview_button"
+											onClick={() => history.push(`/editor/pages/${index}?edit`)}
+										>
 											{t("checkout.book_modal.btn.edit")}
-
 										</button>
 									</div>
 								</div>
